@@ -12,222 +12,270 @@
 \usepackage{cite}
 \usepackage{tabularx}
 
-\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
-% updated with editorial comments 8/9/2021
 
 \begin{document}
 
-\title{A Sample Article Using IEEEtran.cls\\ for IEEE Journals and Transactions}
+\title{Análisis Exploratorio Y Preprocesamiento De Datos De Homicidios En Colombia (2015-2023)}
 
-\author{IEEE Publication Technology,~\IEEEmembership{Staff,~IEEE,}
-        % <-this % stops a space
-\thanks{This paper was produced by the IEEE Publication Technology Group. They are in Piscataway, NJ.}% <-this % stops a space
-\thanks{Manuscript received April 19, 2021; revised August 16, 2021.}}
-
-% The paper headers
-\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2021}%
-{Shell \MakeLowercase{\textit{et al.}}: A Sample Article Using IEEEtran.cls for IEEE Journals}
-
-\IEEEpubid{0000--0000/00\$00.00~\copyright~2021 IEEE}
-% Remember, if you use this you must call \IEEEpubidadjcol in the second
-% column for its text to clear the IEEEpubid mark.
-
+\author{
+  Y.Y. Mora Segura, 
+  \and
+  A.D. Ramírez Chiquillo, 
+  \and
+  J.D. Ramírez Castañeda 
+}
 \maketitle
-
 \begin{abstract}
-El análisis de datos de eventos violentos como los homicidios es crucial para comprender sus causas, contextos y diseñar estrategias de prevención efectivas. Sin embargo, antes de aplicar modelos predictivos o realizar inferencias profundas, es indispensable llevar a cabo un análisis exploratorio exhaustivo y un preprocesamiento cuidadoso de los datos disponibles. Este artículo detalla los primeros pasos de este proceso utilizando un conjunto de datos de homicidios.
+Analyzing data on violent events such as homicides is crucial for understanding their causes and contexts and designing effective prevention strategies. However, before applying predictive models or making in-depth inferences, it is essential to conduct a thorough exploratory analysis and careful preprocessing of the available data. This article details the first steps of this process using a homicide dataset.
 \end{abstract}
 
+
 \begin{IEEEkeywords}
-Análisis exploratorio de datos, preprocesamiento de datos, homicidios, patrones de violencia.
+Exploratory data analysis, homicides, Colombia, missing values, preprocessing, classification, association, data mining.
 \end{IEEEkeywords}
 
 \section{Introduction}
 \IEEEPARstart{E}{l} análisis de datos de eventos violentos como los homicidios es fundamental para obtener una comprensión
- profunda de sus raíces, los entornos en los que ocurren y para la formulación de estrategias de prevención que sean efectivas. 
- No obstante, antes de la implementación de modelos predictivos sofisticados o la extracción de conclusiones significativas, 
+ profunda de sus raíces, los entornos en los que ocurren y para la formulación de estrategias de prevención que sean efectivas.
+ No obstante, antes de la implementación de modelos predictivos sofisticados o la extracción de conclusiones significativas,
  se requiere un análisis exploratorio exhaustivo y una preparación meticulosa de los datos existentes. Este artículo describe
-  las etapas iniciales de este procedimiento, utilizando un conjunto de datos específico de homicidios.
-
-
+  las etapas iniciales de este procedimiento, utilizando un conjunto de datos específico de homicidios en Colombia.
 %---------------------------------------------------------------------------------
 % Secciones del Documento
 %---------------------------------------------------------------------------------
-
 \section{Descripción del Conjunto de Datos}
-
-
+El conjunto de datos analizado proviene del portal de Datos Abiertos Colombia, bajo el título ``Presuntos Homicidios. Colombia, 2015 a 2023. Cifras definitivas". Este repositorio contiene registros oficiales de homicidios ocurridos en el territorio colombiano, recopilados por Instituto Nacional de Medicina Legal y Ciencias Forenses.
+El dataset completo comprende 111.263 registros de presuntos homicidios, cada uno caracterizado por 35 variables que describen aspectos relacionados con:
+\begin{itemize}
+\item \textbf{Características de la víctima:} Información sociodemográfica como edad, sexo, escolaridad, estado civil, país de nacimiento y pertenencia grupal.
+\item \textbf{Características espacio-temporales del hecho:} Ubicación geográfica (departamento, municipio, zona), fecha y franja horaria del suceso.
+\item \textbf{Circunstancias y modalidades del homicidio:} Mecanismo causal, diagnóstico de lesiones, escenario, circunstancia y actividad durante el hecho.
+\item \textbf{Información sobre el presunto agresor:} Cuando está disponible, categorización del autor del homicidio con relacion a la víctima.
+\end{itemize}
+Es importante destacar que los datos representan ``presuntos" homicidios, lo que implica que son casos clasificados preliminarmente como homicidios por las autoridades, pero que podrían estar sujetos a reclasificación posterior durante el proceso judicial \cite{Datos2023}. Esta consideración es relevante al momento de interpretar los resultados y establecer conclusiones.
+La temporalidad del conjunto abarca nueve años (2015-2023), lo que permite observar tendencias y variaciones a lo largo del tiempo. La cobertura geográfica incluye la totalidad del territorio colombiano, con representación de los 32 departamentos y el Distrito Capital, aunque con variaciones significativas en la cantidad de casos registrados por región.
 \section{Análisis Exploratorio del Conjunto de Datos}
-
-El objetivo de esta sección es realizar un Análisis Exploratorio de Datos (AED) sobre el conjunto de presuntos homicidios en Colombia (2015–2023), con énfasis en las variables categóricas (ya que estas conforman la mayoría de los datos). El notebook adjunto implementa una serie de pasos estándar y avanzados para:
-
-\begin{itemize}
-    \item Conocer la estructura y calidad del dataset.
-    \item Identificar valores faltantes y la manera en la que estos están representados.
-    \item Caracterizar variables numéricas y, especialmente, categóricas.
-    \item Explorar relaciones bivariantes y multivariantes en las variables consideradas como más relevantes.
-    \item Detectar categorías raras que puedan afectar futuros modelos.
-\end{itemize}
-
-Finalmente, a partir de todos estos hallazgos, se propone la variable \textbf{Circunstancia del Hecho} como la más adecuada para un futuro modelo de clasificación.
-
-\subsection{Estrategias Utilizadas}
-
-\subsubsection{Instalación y carga de librerías}
-\begin{itemize}
-    \item Se instaló la librería \texttt{tabulate} para presentar tablas de resumen en formato legible dentro de Colab.
-    \item Se importaron \texttt{pandas}, \texttt{NumPy}, \texttt{matplotlib} y \texttt{seaborn}.
-    \item Se habilitó \texttt{\%matplotlib inline} para ver los gráficos directamente en el notebook.
-\end{itemize}
-
-\subsubsection{Importación y vista inicial del dataset}
-\begin{itemize}
-    \item Lectura del CSV desde Google Drive, mediante \texttt{pd.read\_csv()}.
-    \item Se utilizó \texttt{df.head()} para inspeccionar las primeras filas y \texttt{df.shape} para conocer su tamaño (111263 filas y 35 columnas).
-    \item Con \texttt{df.info()} y \texttt{df.dtypes} se validaron los tipos de datos de cada columna (la mayoría como \texttt{object}, algunas numéricas como año, ID y Códigos DANE).
-\end{itemize}
-
-\subsubsection{Detección y tratamiento de valores faltantes}
-\begin{itemize}
-    \item Ejecución de \texttt{df.isnull().sum().sort\_values()} para obtener el conteo de verdaderos “NaN”.
-    \item Según nuestras observaciones, pudimos identificar que muchos faltantes no se codifican como NaN sino como cadenas (“No aplica”, espacios en blanco, etiquetas locales). Teniendo en cuenta esto se realizó una inspección manual de los valores únicos para cada variable, buscando patrones de ausencias no estándar.
-\end{itemize}
-
-\subsubsection{Análisis univariante}
-
-\paragraph{Variables numéricas}
-\begin{itemize}
-    \item Uso de \texttt{df.describe()} para resumir las variables numéricas, pero de esta solo se encontraron resultados relevantes en el año del hecho.
-    \item Boxplots de edad judicial categorizada por sexo, revelando que la mediana y el rango intercuartílico de la edad difieren ligeramente entre hombres y mujeres.
-\end{itemize}
-
-\paragraph{Variables categóricas}
-\begin{itemize}
-    \item Identificación automática de variables de tipo objeto con \texttt{df.select\_dtypes(include='object')}.
-    \item Frecuencias absolutas y relativas impresas con \texttt{value\_counts(dropna=False)} y presentadas con \texttt{tabulate} para mayor legibilidad.
-    \item Gráficos de barras (\texttt{sns.countplot} sobre \texttt{matplotlib}) para las variables categóricas.
-\end{itemize}
-
-\subsubsection{Análisis bivariante y pruebas de asociación}
-\begin{itemize}
-    \item Tablas de contingencia (\texttt{pd.crosstab}) entre pares de categorías (Sexo vs. Circunstancia).
-    \item Prueba de Chi-cuadrado (\texttt{chi2\_contingency}) en cada tabla para cuantificar si la relación observada es estadísticamente significativa.
-\end{itemize}
-
-\subsubsection{Detección de categorías raras}
-\begin{itemize}
-    \item Para cada variable categórica, se calcularon las proporciones de cada etiqueta y se listaron aquellas con frecuencia $<$ 1\% del total.
-    \item Estas categorías de baja representación se consideraron para agruparse en un nivel “Otros” antes de cualquier modelado predictivo, con el fin de evitar ruido y problemas de \textit{sparsity}.
-\end{itemize}
-
-\subsubsection{Análisis multivariante y correlaciones}
-\begin{itemize}
-    \item Construcción de la matriz de correlación sobre las variables numéricas y visualización con \texttt{heatmap} de \texttt{seaborn} para identificar posibles colinealidades.
-    \item Al observar que las variables numéricas no presentaban correlaciones fuertes, se confirmó que el análisis se debía centrar en las categorías.
-\end{itemize}
-
-\subsection{Principales Resultados}
+El propósito del Análisis Exploratorio de Datos (AED) realizado fue comprender la estructura, calidad y características principales del conjunto de datos, con particular énfasis en las variables categóricas que conforman la mayoría de los atributos disponibles. Este análisis inicial es fundamental para orientar decisiones de preprocesamiento y para la identificación de variables con potencial explicativo.
 
 \subsubsection{Calidad de los datos}
+El análisis reveló varios desafíos relacionados con la calidad de los datos:
 \begin{itemize}
-    \item Aunque \texttt{df.info()} mostraba pocos NaN reales, se detectaron múltiples cadenas (“No aplica”, “Desconocido”, “no informado”) que requieren un preprocesamiento especial.
-    \item Sólo la variable numérica (Año del hecho) resultó robusta; el resto eran categorías puras.
+\item \textbf{Valores faltantes heterogéneos:} Se identificaron múltiples representaciones de datos ausentes (``No aplica", ``Sin información", ``Desconocido", espacios en blanco), lo que complicó su cuantificación exacta.
+\item \textbf{Altos porcentajes de datos faltantes en variables clave:} Variables como ``Circunstancia del Hecho" (64.16\%), ``Actividad Durante el Hecho" (38.89\%) y ``Escolaridad" (21.01\%) presentaron porcentajes significativos de valores faltantes.
+\item \textbf{Variables redundantes o no informativas:} Se encontraron siete variables con un único valor (``No aplica") en todos los registros: ``Condición de la Víctima", ``Medio de Desplazamiento", ``Servicio del Vehículo", ``Clase o Tipo de Accidente", ``Objeto de Colisión", ``Servicio del Objeto de Colisión" y ``Razón del Suicidio".
+\item \textbf{Inconsistencias en la codificación:} Se detectaron variaciones ortográficas para la misma categoría en variables como ``Escenario del Hecho" (por ejemplo, ``Vía pública" y ``Vía Pública" como entradas separadas).
 \end{itemize}
-
-\subsubsection{Distribución de casos}
+Estos hallazgos señalan la necesidad de un preprocesamiento exhaustivo antes de cualquier modelado predictivo.
+\subsubsection{Distribución temporal de los casos}
+El análisis temporal de los homicidios mostró patrones importantes:
 \begin{itemize}
-    \item Se evidencia un aumento en los homicidios en el transcurso de los años. Se ve una tendencia incremental leve, con una excepción en el año 2020, donde se rompió esta tendencia incremental y se mostró valores muy similares a los del año 2017.
-    \item Arma de fuego y arma corto punzante fueron mecanismos y circunstancias dominantes, con más del 60 \% de los casos cada uno.
+\item \textbf{Tendencia anual:} Se observó una ligera tendencia incremental en el número de homicidios durante el periodo estudiado, con la excepción notable del año 2020, donde se registró una disminución que lo situó en niveles similares a 2017. Esta anomalía podría estar relacionada con las restricciones de movilidad implementadas durante la pandemia de COVID-19, aunque esta hipótesis requeriría análisis adicionales.
+\item \textbf{Estacionalidad mensual:} Los meses con mayor incidencia de homicidios fueron diciembre (10.494 casos) y mayo (9.629 casos), lo que podría relacionarse con periodos festivos y de mayor actividad social.
+\item \textbf{Distribución semanal:} Los días de fin de semana concentraron la mayor cantidad de casos, con el domingo (23.263 casos) y el sábado (17.924 casos) como los días de mayor incidencia.
 \end{itemize}
-
-\subsubsection{Categorías raras}
+\subsubsection{Patrones espaciales}
+La distribución geográfica de los homicidios reveló concentraciones significativas:
 \begin{itemize}
-    \item Se identificaron en la mayoría de variables etiquetas con frecuencias relativas por debajo del 1 \% (por ejemplo, algunas clases de “Objeto de colisión” en homicidios por transporte).
-    \item En estas se debe considerar agrupaciones bajo categorías como “Otros” para mejorar la estabilidad de futuros modelos.
+\item \textbf{Concentración urbana:} Las cabeceras municipales registraron 78.280 casos (70.4\% del total), mientras que las áreas rurales reportaron 25.891 casos (23.3\%) y los centros poblados 5.666 casos (5.1\%).
+\item \textbf{Departamentos con mayor incidencia:} Valle del Cauca (21.124 casos), Antioquia (17.133 casos) y Bogotá D.C. (10.412 casos) concentraron el mayor número de homicidios, coincidiendo con las áreas más pobladas del país pero también con zonas históricamente afectadas por diversas dinámicas de violencia.
+\item \textbf{Municipios críticos:} Bogotá D.C. (10.412 casos), Cali (8.997 casos) y Medellín (4.402 casos) fueron los municipios con mayor número absoluto de casos.
 \end{itemize}
-
-\subsection{Hallazgos}
-
-El AED confirmó que la variable \textbf{Circunstancia del Hecho} es la más apropiada como objetivo para un modelo de clasificación, porque:
-
+Estos patrones espaciales sugieren la importancia de factores urbanos y regionales específicos en la distribución de la violencia homicida.
+\subsubsection{Perfil demográfico de las víctimas}
+Las características sociodemográficas de las víctimas mostraron patrones de vulnerabilidad específicos:
 \begin{itemize}
-    \item Tiene múltiples clases significativas (homicidio simple, agravado, riña, feminicidio, etc.).
-    \item Muestra asociaciones estadísticamente robustas con otras variables clave (sexo, zona, escenario).
-    \item Su predicción permitiría orientar políticas de prevención diferenciales según el contexto del homicidio.
+\item \textbf{Distribución por sexo:} El 91.8\% de las víctimas fueron hombres (102.174 casos), frente a un 8.1\% de mujeres (8.996 casos), evidenciando un desbalanceo.
+\item \textbf{Grupos etarios:} Los jóvenes adultos entre 20-29 años concentraron la mayor proporción de víctimas (42.314 casos, 38\%), seguidos por adultos de 30-39 años (28.367 casos, 25.5\%).
+\item \textbf{Nivel educativo:} Entre los datos disponibles, predominaron víctimas con educación básica primaria (35.496 casos) y educación media o secundaria (33.319 casos), sugiriendo una posible relación con condiciones socioeconómicas.
+\item \textbf{Ancestro racial:} La categoría ``Mestizo" fue predominante (85.983 casos, 77.3\%), seguida de ``Negro" (9.645 casos, 8.7\%).
 \end{itemize}
-
-Los pasos de detección de valores faltantes no estándar y de agrupación de categorías raras fueron críticos para asegurar la calidad de los datos. 
-
-Se debe analizar qué tantas implicaciones e imposibilidades traerá el hecho que muchos atributos contienen valores faltantes hasta del 64\%.
-
-
-\section{Análisis Exploratorio: Un Vistazo a los Datos Crudos}
-El análisis preliminar del conjunto de datos reveló varias características importantes y desafíos:
+Estos resultados señalan la existencia de perfiles de riesgo diferenciados, con una clara sobrerrepresentación de hombres jóvenes como víctimas de homicidio.
+\subsubsection{Características de los homicidios}
+El análisis de las modalidades y circunstancias de los homicidios reveló:
 \begin{itemize}
-    \item \textbf{Desbalance por sexo:} Los datos mostraron un claro desequilibrio en la distribución por sexo de la víctima, con una frecuencia de homicidios considerablemente mayor para hombres.
-    \item \textbf{Tendencia temporal:} Se observó que la frecuencia general de homicidios disminuye a medida que avanzan los años cubiertos por el conjunto de datos.
-    \item \textbf{Temporalidad específica:} Los meses con mayor incidencia de homicidios fueron diciembre y mayo. Los días de la semana con mayor incidencia fueron domingo y sábado. Se sugiere investigar la relación entre esta temporalidad específica y la incidencia de casos.
-    \item \textbf{Ubicación principal:} Las cabeceras municipales se identificaron como los lugares más comunes donde ocurren los hechos. Se propone investigar las características específicas de estas zonas para entender por qué concentran la mayor cantidad de casos.
-    \item \textbf{Datos faltantes significativos:} Un desafío importante identificado fue la presencia de un alto porcentaje de datos faltantes en varias variables clave:
-    \begin{itemize}
-        \item Nivel de escolaridad: 21.01% sin información.
-        \item Actividad durante el hecho: 38.89% sin información.
-        \item Circunstancia del hecho: 64.16% sin información.
-    \end{itemize}
-    Otras variables, como la pertenencia grupal, también mostraron una cantidad considerable de valores faltantes (16.81%). Además, se identificaron "outliers" potenciales, como nacionalidades con solo un dato por país.
+\item \textbf{Mecanismo causal:} El uso de armas de fuego fue el mecanismo predominante (81.790 casos, 73.5\%), seguido por armas cortopunzantes (19.406 casos, 17.4\%), lo que refleja patrones de acceso y uso de armas en contextos violentos.
+\item \textbf{Escenario del hecho:} La vía pública fue el escenario más común (57.475 casos, 51.7\%), seguido por viviendas (14.924 casos, 13.4\%) y espacios abiertos como bosques o playas (7.666 casos, 6.9\%).
+\item \textbf{Circunstancia del hecho:} Entre los casos con información disponible, destacaron ``Ajuste de cuentas" (8.598 casos), ``Riña" (7.089 casos) y ``Sicariato" (5.749 casos), señalando la relevancia de la violencia instrumental, interpersonal y organizada.
+\item \textbf{Presunto agresor:} El 52.9\% de los casos (58.883) no tenían información sobre el agresor, mientras que un 31.3\% (34.861) fueron clasificados como ``Agresor desconocido", lo que refleja desafíos importantes para el manejo de datos y uso de futuros modelos de asociación o predicción.
 \end{itemize}
+Estos datos proporcionan un panorama sobre las dinámicas predominantes de la violencia homicida en Colombia durante el periodo estudiado.
+\subsection{Hallazgos Principales del Análisis Exploratorio}
+El análisis exploratorio reveló varios aspectos críticos sobre la naturaleza y calidad de los datos:
+\begin{itemize}
+\item \textbf{Desafíos de calidad:} La presencia significativa de datos faltantes en variables clave constituye un desafío metodológico importante, que requerirá estrategias específicas de imputación o incorporación explícita de la ausencia de información como una categoría analítica.
+\item \textbf{Patrones temporoespaciales:} La distribución de homicidios muestra patrones claros en términos temporales (mayor incidencia en fines de semana y meses específicos) y espaciales (concentración en cabeceras municipales y departamentos específicos), que deben ser considerados en la interpretación y modelado.
 
+\item \textbf{Perfiles demográficos:} La clara sobrerrepresentación de hombres jóvenes entre las víctimas señala la necesidad de explorar factores específicos de género y edad en la violencia homicida.
+
+\item \textbf{Modalidades predominantes:} El predominio de armas de fuego, escenarios públicos y circunstancias relacionadas con ajustes de cuentas, riñas y sicariato apunta hacia la coexistencia de diversas formas de violencia (organizada, interpersonal, oportunista).
+
+\end{itemize}
+Estos hallazgos sientan las bases para las decisiones de preprocesamiento y selección de características que se abordan en las siguientes secciones.
 \section{Preprocesamiento de Datos}
-Basándonos en las observaciones preliminares y la naturaleza específica de cada variable, se tomaron varias decisiones clave para preparar el conjunto de datos. El objetivo fue limpiar y organizar los datos para que fueran adecuados para análisis posteriores y modelado, facilitando la identificación de patrones relevantes.
+Basados en los hallazgos del análisis exploratorio, se desarrolló una estrategia integral de preprocesamiento para abordar los desafíos identificados y preparar los datos para análisis más avanzados.
+\subsection{Estrategia de Limpieza y Transformación}
+\subsubsection{Eliminación de variables no informativas}
+Se identificaron y eliminaron variables que no aportaban información relevante:
 \begin{itemize}
-    \item \textbf{Eliminación de variables no relevantes o redundantes:} Se decidió eliminar variables que tenían un único valor ("No aplica" en todos los registros), así como códigos DANE ('Código Dane Municipio', 'Código Dane Departamento'), y variables redundantes como 'Edad judicial' y 'Ciclo Vital' en favor de 'Edad natural'. La razón es que estas variables no proporcionaban información útil o única para identificar patrones o variabilidad en los homicidios. Variables como 'Condición de la Víctima', 'Medio de Desplazamiento', 'Servicio del Vehículo', 'Clase o Tipo de Accidente', 'Objeto de Colisión', 'Servicio del Objeto de Colisión', y 'Razón del Suicidio' tenían un solo valor ('No aplica') en todos los casos y fueron identificadas para posible eliminación.
-    \item \textbf{Manejo de datos faltantes:} La estrategia varió según la variable y el porcentaje de datos faltantes.
-    \begin{itemize}
-        \item Para la Edad y la Fecha, los registros con valores faltantes fueron eliminados. Razón: Representaban una proporción muy pequeña del total de datos (0.1% para edad, 0.207% para fecha) y a menudo carecían de información en otros campos importantes, lo que hacía que su eliminación no resultara en una pérdida significativa de datos útiles.
-        \item Para la Pertenencia Grupal, que tenía un 16.81% de datos faltantes, se optó por la imputación utilizando la moda. Razón: La categoría más frecuente en esta variable es "Ninguno" (representando la mayoría de los casos reportados antes de la imputación). Imputar los valores faltantes con esta categoría mayoritaria permitió retener un número considerable de registros que de otro modo se habrían eliminado si se hubiera optado por la eliminación de filas con datos faltantes en esta variable.
-        \item Para variables con porcentajes muy altos de datos faltantes como Escolaridad (21.01\%), Actividad Durante el Hecho (38.89\%) y Circunstancia del Hecho (64.16\%), se identificó el desafío. Razón: Dada la magnitud de los faltantes, la eliminación de filas no era viable sin perder la mayoría del conjunto de datos. En el caso de "Circunstancia del Hecho", la categoría "Sin información" se mantuvo como una categoría válida para el análisis, dada su alta frecuencia.
-    \end{itemize}
-    \item \textbf{Corrección de errores y agrupación:}
-    \begin{itemize}
-        \item Se identificaron y eliminaron categorías duplicadas en la variable "Escenario del Hecho", causadas por errores de digitación. Esto asegura que cada categoría represente un escenario único y correcto.
-        \item Se evaluó la posibilidad de agrupar categorías amplias en subgrupos más manejables para simplificar el análisis y mejorar el rendimiento de modelos predictivos. Ejemplos incluyeron agrupar el País de Nacimiento en "Colombia" y "Otros". También se evaluó agrupar categorías en el Estado Civil (que tenía 8 categorías únicas) antes de aplicar técnicas como one-hot encoding.
-        \item En cuanto a las edades, se descartó el uso de 'Edad judicial' en favor de 'Edad natural' debido a que esta última ofrece una mayor granularidad. Además, se planteó la categorización de las víctimas como mayores o menores de edad, y la aplicación de one-hot encoding a esta variable categórica. Se observaron también agrupaciones de edad en ciclos vitales como "Juventud" (18 a 28 años) y "Adultez" (29 a 59 años).
-        \item Específicamente para la variable "Circunstancia del Hecho", se realizó una reagrupación de las múltiples categorías existentes (50 valores únicos inicialmente) en subgrupos más amplios y significativos. Razón: Esto fue crucial para hacer la variable más manejable para el modelado posterior y para capturar patrones a un nivel más general. Este mapeo permitió consolidar las categorías, por ejemplo, agrupando 'Riña', 'Violencia de pareja' y 'Celos' bajo "Violencia interpersonal", o 'Sicariato', 'Ajuste de cuentas' y 'Hurto' bajo "Crimen organizado / sicariato". Otras categorías se agruparon en temas como "Conflicto armado / terrorismo", "Violencia institucional / Estado", "Violencia estructural o sociopolítica", y "Violencia contra población vulnerable". Las categorías con muy baja frecuencia pudieron ser agrupadas en una categoría "Otros".
-    \end{itemize}
-    Este proceso de preprocesamiento no solo limpió los datos, sino que también los transformó (agrupación de categorías, imputación, creación de nuevas variables como mayor/menor de edad) para ser más adecuados para análisis posteriores y para mejorar la efectividad de la selección de características.
+\item \textbf{Variables con un único valor:} Se eliminaron siete variables que contenían ``No aplica" en todos los registros: ``Condición de la Víctima", ``Medio de Desplazamiento", ``Servicio del Vehículo", ``Clase o Tipo de Accidente", ``Objeto de Colisión", ``Servicio del Objeto de Colisión" y ``Razón del Suicidio".
+\item \textbf{Variables redundantes:} Se eliminaron códigos DANE duplicados y se optó por mantener solo ``Edad natural", eliminando ``Edad judicial" y ``Ciclo Vital" por redundancia informativa.
+\end{itemize}
+\subsubsection{Estandarización de categorías}
+Se identificaron y corrigieron inconsistencias en la codificación de variables categóricas:
+\begin{itemize}
+\item \textbf{Corrección de errores tipográficos:} Se identificaron y unificaron categorías duplicadas en variables como ``Escenario del Hecho" y ``Estado Civil" (Por ejemplo ``Vía pública" y ``Vía Pública").
+\item \textbf{Estandarización de valores faltantes:} Se normalizaron las diversas representaciones de datos ausentes ("Sin información", ``Desconocido", espacios en blanco) a un formato consistente.
+
+\end{itemize}
+\subsection{Manejo de Datos Faltantes}
+La estrategia para el tratamiento de valores faltantes varió según la naturaleza y porcentaje de ausencia en cada variable:
+\subsubsection{Eliminación de registros}
+Se aplicó eliminación selectiva para:
+\begin{itemize}
+\item \textbf{Variables críticas con bajo porcentaje de faltantes:} Se eliminaron registros con valores faltantes en ``Edad" (0.1\%) y ``Fecha" (0.21\%), ya que estas variables son fundamentales y su porcentaje de ausencia era mínimo.
+\end{itemize}
+\subsubsection{Imputación de valores}
+Se realizaron imputaciones para:
+\begin{itemize}
+\item \textbf{Variables categóricas con niveles moderados de ausencia:} En ``Pertenencia Grupal" (16.81\% de datos faltantes), se imputó la categoría modal ``Ninguno", bajo el supuesto de que la ausencia de información sobre pertenencia grupal suele indicar ausencia de pertenencia específica.
+\end{itemize}
+\subsubsection{Inclusión explícita de valores faltantes}
+Para variables con alto porcentaje de datos ausentes:
+\begin{itemize}
+\item \textbf{Incorporación como categoría analítica:} En variables como ``Circunstancia del Hecho" (64.16\% de ausencia) y ``Actividad Durante el Hecho" (38.89\% de ausencia), la categoría ``Sin información" se mantuvo como una categoría válida para el análisis, reconociendo que la ausencia de datos puede ser informativa en sí misma.
+\end{itemize}
+\subsection{Agrupación de Categorías}
+Para abordar la alta cardinalidad y la presencia de categorías raras, se implementaron estrategias de agrupación:
+\subsubsection{Agrupación por frecuencia}
+\begin{itemize}
+\item \textbf{Umbral de frecuencia:} Se estableció un umbral del 1\% para identificar categorías poco frecuentes, que fueron candidatas para agrupación.
+\item \textbf{Categoría ``Otros":} Se creó una categoría ``Otros" para agrupar valores con frecuencia inferior al umbral establecido en variables como ``País de Nacimiento de la Víctima", donde las categorías distintas a ``Colombia" y ``Venezuela" representaban menos del 2\% de los casos totales.
+\end{itemize}
+\subsubsection{Agrupación conceptual}
+Para la variable ``Circunstancia del Hecho", se realizó una agrupación basada en criterios conceptuales:
+\begin{itemize}
+\item \textbf{Violencia interpersonal:} Agrupando categorías como ``Riña", ``Violencia de pareja" y ``Celos".
+\item \textbf{Crimen organizado/sicariato:} Unificando ``Sicariato", ``Ajuste de cuentas" y ``Hurto".
+
+\item \textbf{Conflicto armado/terrorismo:} Incluyendo ``Acción grupos alzados al margen de la ley", ``Enfrentamiento armado" y ``Acto terrorista".
+
+\item \textbf{Violencia institucional/Estado:} Agrupando ``Acción militar", ``Intervención Legal" y ``Retención legal".
+
+\item \textbf{Violencia contra población vulnerable:} Unificando ``Feminicidio", ``Violencia a niños, niñas y adolescentes" y ``Violencia al adulto mayor".
+\end{itemize}
+Esta agrupación redujo las 50 categorías originales a un conjunto más manejable de 7 categorías principales, facilitando el análisis y potencial modelado posterior.
+\subsection{Codificación para Modelado}
+Para preparar los datos para su uso en modelos estadísticos o de aprendizaje automático, se aplicaron estrategias de codificación:
+\begin{itemize}
+\item \textbf{One-hot encoding:} Se aplicó a variables categóricas con número limitado de categorías (menos de 10), como ``Sexo", ``Estado Civil" y ``Grupo Mayor Menor de Edad". Este método permite transformar variables categóricas en representaciones numéricas manteniendo toda la información sin establecer relaciones de ordinalidad.
+\end{itemize}
+\section{Selección de Características}
+
+Durante esta fase se realizó un análisis exploratorio detallado con el objetivo de identificar las variables categóricas más relevantes para el análisis posterior. Se utilizaron técnicas estadísticas y métricas de información que permiten evaluar tanto la variabilidad interna de las variables como las relaciones entre ellas. Las principales técnicas empleadas fueron el análisis de entropía, la prueba de Chi-cuadrado y el coeficiente V de Cramer, seleccionadas por su capacidad para evaluar variables categóricas de forma objetiva y cuantificable \cite{tan2018introduction}.
+
+\subsection{Distribuciones y Entropía}
+
+Se comenzó con un análisis de las distribuciones de frecuencia de las variables categóricas utilizando conteos (\texttt{value\_counts}) para detectar concentraciones en ciertas categorías. Por ejemplo, se observaron distribuciones muy dominadas por categorías como ``Hombre'' en ``Sexo de la víctima'' o ``Colombia'' en ``País de nacimiento de la víctima'', lo cual sugiere baja variabilidad.
+
+Para cuantificar esta variabilidad se utilizó la entropía, una medida derivada de la teoría de la información \cite{shannon1948mathematical}. La entropía se define como:
+
+\[
+H(X) = -\sum_{i=1}^{n} p(x_i) \log_2 p(x_i)
+\]
+
+donde $p(x_i)$ es la probabilidad de ocurrencia de la categoría $x_i$ de una variable categórica $X$. Una entropía más alta indica que los valores están más distribuidos entre las categorías posibles, lo cual sugiere una mayor capacidad de la variable para diferenciar entre observaciones.
+
+Esta métrica permitió identificar variables con alta riqueza informativa, tales como:
+
+\begin{itemize}
+    \item Municipio del hecho DANE (entropía: 5.198)
+    \item Departamento del hecho DANE (2.899)
+    \item Mes del hecho (2.483)
+    \item Escenario del hecho (1.849)
+    \item Escolaridad (1.798)
+    \item Actividad durante el hecho (1.753)
+    \item Rango de hora del hecho (1.539)
 \end{itemize}
 
-\section{Selección de Características}
-Durante esta fase exploratoria, se examinaron las distribuciones de variables individuales, a menudo utilizando conteos de valores (\texttt{value\_counts}) para entender la frecuencia y proporción de cada categoría. Por ejemplo, se observó la alta concentración en categorías como "Hombre" para Sexo de la víctima o "Colombia" para País de Nacimiento de la Víctima.
+Estas variables, por su distribución uniforme de valores, poseen un alto potencial para aportar información relevante en análisis descriptivos o modelos predictivos.
 
-Para comenzar a explorar las relaciones entre variables categóricas, se emplearon tabulaciones cruzadas. Por ejemplo, se analizaron cruces entre la Zona del Hecho y el Sexo de la víctima, o la Circunstancia del Hecho y el Sexo de la víctima.
+\subsection{Relaciones Entre Variables}
 
-Para cuantificar la fuerza de la asociación entre estas variables categóricas y evaluar su potencial relevancia (un paso inicial hacia la selección de características), se emplearon medidas estadísticas como la Chi-cuadrado y el coeficiente V de Cramer.
+Para evaluar la relación entre variables categóricas, se recurrió a la prueba de Chi-cuadrado y al coeficiente V de Cramer \cite{backhaus2016multivariate}. 
 
-\subsection{Chi-cuadrado}
-Esta estadística se utiliza para determinar si existe una asociación significativa entre dos variables categóricas. Evalúa si las frecuencias observadas en una tabulación cruzada difieren significativamente de las frecuencias esperadas bajo la hipótesis de independencia. Un valor de Chi-cuadrado grande y un p-valor pequeño sugieren que las variables están asociadas. Los resultados del análisis mostraron cómo ciertas variables categóricas tenían puntuaciones altas de Chi-cuadrado en relación con otras variables categóricas (consideradas como "pseudo-objetivos" en el contexto del análisis), lo que indica una fuerte dependencia y las identifica como características potencialmente importantes.
+Estas herramientas permiten identificar asociaciones estadísticas entre pares de variables.
 
-\subsection{Coeficiente V de Cramer}
-Es una medida de asociación entre dos variables nominales (categóricas). Se basa en la estadística Chi-cuadrado, pero su valor se ajusta para estar entre 0 y 1. Un valor de 0 indica que no hay asociación entre las variables, mientras que un valor de 1 indica una asociación perfecta. En el análisis exploratorio y como parte de la evaluación de características, el V de Cramer es valioso para identificar qué variables categóricas muestran una relación más fuerte con otras variables o una posible variable de interés. Esto puede informar la selección de características para futuros modelos predictivos al centrarse en variables que tienen relaciones más fuertes con lo que se desea analizar o predecir.
+\paragraph{Chi-cuadrado}
 
-También se utilizó la entropía como medida de la variabilidad o "riqueza de información" en las variables categóricas. Variables con mayor entropía (dentro de las no dominadas por valores faltantes o "No aplica") sugieren que sus categorías están más uniformemente distribuidas, lo que puede hacerlas más informativas. Por ejemplo, variables como Escenario del Hecho, Escolaridad, Actividad Durante el Hecho y Rango de Hora mostraron entropías más altas. La variable "Circunstancia del Hecho", a pesar de tener muchos valores faltantes, mostró una entropía de 1.107589, sugiriendo suficiente diversidad en sus categorías no faltantes para ser considerada.
+La prueba de Chi-cuadrado ($\chi^2$) evalúa si existe una relación estadísticamente significativa entre dos variables categóricas. Se calcula a partir de una tabla de contingencia y compara las frecuencias observadas con las esperadas bajo la hipótesis de independencia:
 
-Estas medidas permitieron identificar qué variables categóricas mostraban las asociaciones más fuertes entre sí o con posibles variables de interés. Particularmente, el Chi-cuadrado fue usado para medir la dependencia entre las características y potenciales variables objetivo y la entropía ayudó a entender la distribución de la información dentro de cada variable, destacando aquellas con mayor variabilidad y potencial para diferenciar entre casos.
+\[
+\chi^2 = \sum \frac{(O - E)^2}{E}
+\]
 
-La información obtenida de estos análisis de relaciones y distribuciones es vital para guiar la selección de un subconjunto óptimo de características para la construcción de modelos predictivos o para centrar análisis descriptivos más profundos. Variables con relaciones fuertes con fenómenos de interés o con distribuciones informativas son candidatas más fuertes para ser incluidas en futuros análisis.
+donde $O$ es la frecuencia observada y $E$ la esperada. Un valor alto de $\chi^2$ y un p-valor bajo sugieren una relación significativa entre las variables.
+
+\paragraph{Coeficiente V de Cramer}
+
+El V de Cramer se basa en el estadístico Chi-cuadrado, pero normaliza el resultado en una escala entre 0 y 1, facilitando la comparación de la fuerza de asociación:
+
+\[
+V = \sqrt{\frac{\chi^2}{n(k - 1)}}
+\]
+
+donde $n$ es el tamaño de la muestra y $k$ es el menor número de categorías entre las dos variables. Un valor cercano a 0 indica independencia, mientras que valores más cercanos a 1 indican una asociación fuerte \cite{backhaus2016multivariate}.
+
+El análisis reveló asociaciones significativas, entre ellas:
+
+\begin{itemize}
+    \item Municipio del hecho DANE y Departamento del hecho DANE: V de Cramer = 0.990 (alta redundancia)
+    \item Circunstancia del hecho con:
+         ``Municipio del hecho'' (0.304)
+\end{itemize}
+
+Estas relaciones sugieren que ciertas variables capturan contextos comunes o dependencias importantes entre dimensiones del evento, lo que puede ser aprovechado en tareas de modelado.
+
+\subsection{Selección Basada en Métricas}
+
+La decisión de qué variables conservar se basó en una combinación de alta entropía (variabilidad interna) y alta asociación (dependencia estadística con otras variables relevantes). Este enfoque permite reducir la redundancia y seleccionar un subconjunto de características más informativo y eficiente.
+
+Las variables prioritarias identificadas incluyen:
+
+\begin{itemize}
+    \item Municipio del hecho DANE: Máxima entropía (5.198), útil para patrones espaciales.
+    \item Escenario del hecho y Actividad durante el hecho: Alta entropía y correlaciones significativas, aportan contexto situacional.
+    \item Circunstancia del hecho: Aunque con datos faltantes, muestra diversidad y asociaciones relevantes.
+    \item Grupo de edad de la víctima y Mes del hecho: Representan dimensiones demográficas y temporales con buena variabilidad.
+\end{itemize}
+
+Su combinación facilita una selección de características objetiva, interpretable y basada en evidencia, lo cual es crucial para el éxito de modelos predictivos y para generar análisis descriptivos robustos.
 
 \section{Conclusión}
-El análisis exploratorio y el preprocesamiento descritos son pasos fundamentales para transformar un conjunto de datos crudo, que a menudo presenta imperfecciones y desafíos como desbalances o datos faltantes, en una base sólida para análisis predictivos y descriptivos más avanzados. Se identificaron y abordaron problemas clave, como el desbalance de género, la presencia de datos faltantes significativos y la necesidad de consolidar o agrupar categorías para un mejor manejo. Las técnicas de evaluación de relaciones entre variables, como el V de Cramer y Chi-cuadrado, junto con la entropía, fueron cruciales durante la fase exploratoria para entender la estructura de los datos e informar las decisiones sobre qué variables son potencialmente más relevantes para el análisis y la modelización. Este enfoque sistemático allana el camino para investigaciones subsiguientes y el desarrollo de modelos que puedan informar eficazmente la toma de decisiones orientadas a la prevención de homicidios.
+
+El análisis exploratorio y el preprocesamiento descritos son pasos fundamentales para transformar un conjunto de datos crudo, que a menudo presenta imperfecciones y desafíos como desbalances o datos faltantes, en una base sólida para análisis predictivos y descriptivos más avanzados. Se identificaron y abordaron problemas clave, como la presencia de datos faltantes significativos y la necesidad de consolidar o agrupar categorías para un mejor manejo. Las técnicas de evaluación de relaciones entre variables, como el V de Cramer y Chi-cuadrado, junto con la entropía, fueron cruciales durante la fase exploratoria para entender la estructura de los datos e informar las decisiones sobre qué variables son potencialmente más relevantes para el análisis y la modelización.
 
 
 \begin{thebibliography}{1}
 \bibliographystyle{IEEEtran}
 
-\bibitem{ref1}
-{\it{Mathematics Into Type}}. American Mathematical Society. [Online]. Available: https://www.ams.org/arc/styleguide/mit-2.pdf
+\bibitem{Datos2023}
+``Presuntos Homicidios. Colombia, 2015 a 2023. Cifras definitivas | Datos Abiertos Colombia,” Dec. 05, 2024. \url{
+https://www.datos.gov.co/Justicia-y-Derecho/Presuntos-Homicidios-Colombia-2015-a-2023-Cifras-d/vtub-3de2}.
+\bibitem{McHugh2013}
+J.~McHugh, “The Chi-square test of independence,” \emph{Biochemia Medica}, vol.~23, no.~2, pp.~143--149, Jun. 2013.
 
-\bibitem{ref2}
-T. W. Chaundy, P. R. Barrett and C. Batey, {\it{The Printing of Mathematics}}. London, U.K., Oxford Univ. Press, 1954.
+\bibitem{Sheskin2011}
+D.~J. Sheskin, \emph{Handbook of Parametric and Nonparametric Statistical Procedures}, 5th ed. Boca Raton, FL: CRC Press, 2011.
+
+\bibitem{tan2018introduction}
+P.~Tan, M.~Steinbach, A.~Karpatne, and V.~Kumar, \emph{Introduction to Data Mining}, 2nd~ed. Pearson, 2018.
+
+\bibitem{shannon1948mathematical}
+C.~E. Shannon, ``A Mathematical Theory of Communication,'' \emph{Bell System Technical Journal}, vol.~27, pp. 379--423, 623--656, 1948.
+
+\bibitem{backhaus2016multivariate}
+K.~Backhaus, B.~Erichson, W.~Plinke, and R.~Weiber, \emph{Multivariate Analysemethoden: Eine anwendungsorientierte Einführung}, 14th~ed. Springer Gabler, 2016.
+
 
 \end{thebibliography}
 
