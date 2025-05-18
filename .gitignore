@@ -1,3 +1,6 @@
+# Ignore all compiled Python files in __pycache__ directories
+__pycache__/
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
