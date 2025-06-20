@@ -29,6 +29,36 @@ def preprocess_data(df):
     columns_to_drop = ['Edad judicial', 'Ciclo Vital', 'Código Dane Municipio', 'Código Dane Departamento']
     df = df.drop(columns=[col for col in columns_to_drop if col in df.columns], errors='ignore')
 
+    # Cambiar valor de presunto agresor "Amigo" por "Amigo (a)"
+    if "Presunto Agresor" in df.columns:
+        df["Presunto Agresor"] = df["Presunto Agresor"].replace({"Amigo": "Amigo (a)"})
+
+    # Agrupar Sin informacion , Sin Información en columnas Ancestro Racial, Localidad del Hecho, País de Nacimiento de la Víctima, Escolaridad
+    columns_sin_info = ["Ancestro Racial", "Localidad del Hecho", "País de Nacimiento de la Víctima", "Escolaridad"]
+
+    for col in columns_sin_info:
+        if col in df.columns:
+            df[col] = df[col].replace({"Sin Información": "Sin información"})
+        else:
+            print(f"Column not found, skipping: {col}")
+
+    # 2. Eliminar valores duplicados  y columnas con solo 1 valor
+    df = df.drop_duplicates()
+
+    columns_to_drop = ['Condición de la Víctima', 'Medio de Desplazamiento o Transporte',
+                    'Servicio del Vehículo', 'Clase o Tipo de Accidente',
+                    'Objeto de Colisión', 'Servicio del Objeto de Colisión',
+                    'Razón del Suicidio', 'Manera de muerte']
+
+    # Eliminar las columnas si existen en el DataFrame
+    for col in columns_to_drop:
+        if col in df.columns:
+            df.drop(col, axis=1, inplace=True)
+            print(f"Dropped column: {col}")
+        else:
+            print(f"Column not found, skipping: {col}")
+            
+
     # Conteno de valores únicos y frecuencia absoluta
     for col in df.select_dtypes(include='object').columns:
         print(col, df[col].nunique(), "valores únicos")
