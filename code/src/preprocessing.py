@@ -178,18 +178,6 @@ def preprocess_data(df):
         'Agresión contra grupos marginales o descalificados': 'Violencia contra población vulnerable',
         'Explotación sexual y comercial': 'Violencia contra población vulnerable',
 
-        'Tortura': 'Otros',
-        'Negligencia': 'Otros',
-        'Desaparición forzada': 'Otros',
-        'Minería ilegal': 'Otros',
-        'Aglomeración de público': 'Otros',
-        'Acceso carnal violento': 'Otros',
-        'Ejercicio de actividades ilícitas': 'Otros',
-        'Masacre': 'Otros',
-        'Linchamiento': 'Otros',
-        'Otra': 'Otros',
-        'Feminicidio': 'Otros',
-        'Retención ilegal - secuestro': 'Otros'
     }
 
     # Aplicar el mapeo
@@ -331,7 +319,7 @@ def preprocess_data(df):
 
     # Selección de columnas categóricas para análisis MCA
     categorical_columns = ['Sexo de la victima', 'Grupo de edad de la victima', 'Zona del Hecho',
-                        'Escenario del Hecho', 'Circunstancia del Hecho', 'Manera de muerte']
+                        'Escenario del Hecho', 'Circunstancia del Hecho']
 
     # Asegúrate de que sean tipo string
     df[categorical_columns] = df[categorical_columns].astype(str)
