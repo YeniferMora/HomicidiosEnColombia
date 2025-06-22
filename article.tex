@@ -281,38 +281,46 @@ Con este soporte, se aplicaron tanto \texttt{Apriori} como \texttt{FP-Growth}, o
 
 \subsection*{C. Hallazgos Principales del Análisis de Asociación}
 
-El análisis de las 97 reglas finales reveló perfiles y contextos de riesgo muy definidos. A continuación, se presentan algunos de los hallazgos más destacados que ilustran la diversidad de los patrones encontrados.
+El análisis de las 97 reglas finales, junto con el análisis específico sobre víctimas mujeres, reveló perfiles y contextos de riesgo muy definidos. A continuación, se presentan algunos de los hallazgos más destacados que ilustran la diversidad de los patrones encontrados.
 
 \begin{enumerate}
-    \item[1.)] \textit{Patrón de Violencia Urbana con Arma Blanca:} La regla con la mayor elevación (lift: 1.37) descubierta, indica una asociación fuerte e inesperada entre el tipo de arma y el contexto demográfico-geográfico.
+    \item[1.)] \textit{Patrón de Violencia Urbana con Arma Blanca:} La regla con la mayor elevación (lift: 1.37) en el análisis general, indica una asociación fuerte e inesperada entre el tipo de arma y el contexto demográfico-geográfico.
     \begin{quote}
         \textbf{SI} el escenario del hecho es la \textbf{vía pública} y el mecanismo causal es un \textbf{arma cortopunzante},
         \textbf{ENTONCES} la víctima es un \textbf{hombre} de ancestro \textbf{mestizo} y el crimen ocurre en una \textbf{cabecera municipal}.
     \end{quote}
-    Con una confianza del 69.2\%, esta regla sugiere que la combinación de un ataque con arma blanca en la vía pública incrementa en un 37\% la probabilidad de que el perfil de la víctima y el lugar correspondan a un hombre mestizo en un área urbana, en comparación con la probabilidad general de que esto ocurra.
+    Con una confianza del 69.2\%, esta regla sugiere que la combinación de un ataque con arma blanca en la vía pública incrementa en un 37\% la probabilidad de que el perfil de la víctima y el lugar correspondan a un hombre mestizo en un área urbana.
 
-    \item[2.)] \textit{Asociación entre Víctimas Jóvenes y Armas de Fuego:} Otro patrón distintivo de alto interés (lift: 1.30) vincula directamente al grupo etario de 20 a 24 años con el uso de armas de fuego.
+    \item[2.)] \textit{Asociación entre Víctimas Jóvenes y Armas de Fuego:} Otro patrón distintivo de alto interés (lift: 1.30) vincula directamente al grupo etario de 20 a 24 años con el uso de armas de fuego en el conjunto de datos general.
     \begin{quote}
         \textbf{SI} el escenario es la \textbf{vía pública} y la víctima tiene entre \textbf{20 y 24 años},
         \textbf{ENTONCES} la víctima es un \textbf{hombre}, el hecho ocurre en una \textbf{cabecera municipal} y el mecanismo es un \textbf{proyectil de arma de fuego}.
     \end{quote}
-    Esta regla, con una confianza del 62.4\%, es particularmente relevante ya que define un perfil de riesgo muy específico: los hombres jóvenes en espacios públicos no solo son víctimas frecuentes, sino que su situación está fuertemente asociada a la violencia con armas de fuego en centros urbanos.
+    Esta regla define un perfil de riesgo muy específico: los hombres jóvenes en espacios públicos no solo son víctimas frecuentes, sino que su situación está fuertemente asociada a la violencia con armas de fuego en centros urbanos.
+    
+    \item[3.)] \textit{Perfil de Violencia contra la Mujer con Arma de Fuego:} Al filtrar los datos para analizar únicamente los registros de víctimas mujeres, emergió un patrón revelador sobre la violencia de género.
+    \begin{quote}
+        \textbf{SI} la víctima es \textbf{mujer}, de ancestro \textbf{mestizo} y el hecho ocurre en la \textbf{vía pública},
+        \textbf{ENTONCES} el mecanismo causal es un \textbf{proyectil de arma de fuego}.
+    \end{quote}
+    Con una elevación (lift) de 1.30, este hallazgo indica que para una mujer mestiza en la vía pública, el uso de un arma de fuego como mecanismo causal es un 30\% más probable que en el promedio general de los homicidios de mujeres. Esta regla aísla una vulnerabilidad particular y un perfil de violencia de género muy específico.
 
-    \item[3.)] \textit{Fiabilidad del Contexto Urbano:} Al analizar las reglas de mayor confianza, se confirma la naturaleza urbana de ciertos tipos de violencia. Una de las reglas más fiables (confianza: 90.2\%) establece que:
+    \item[4.)] \textit{Fiabilidad del Contexto Urbano en la Violencia General:} Al analizar las reglas de mayor confianza, se confirma la naturaleza urbana de ciertos tipos de violencia. Una de las reglas más fiables (confianza: 90.2\%) del análisis general establece que:
     \begin{quote}
         \textbf{SI} la víctima es un \textbf{hombre} de ancestro \textbf{mestizo} asesinado con \textbf{arma cortopunzante} en la \textbf{vía pública},
         \textbf{ENTONCES} el hecho ocurre en una \textbf{cabecera municipal}.
     \end{quote}
-    La altísima confianza de esta regla la convierte en una afirmación predictiva robusta: bajo estas condiciones, es casi seguro que el crimen es de carácter urbano.
+    La altísima confianza de esta regla la convierte en una afirmación predictiva robusta.
 \end{enumerate}
 
-En general, las reglas extraídas refuerzan la interconexión entre ser víctima de homicidio siendo hombre, el tipo de arma utilizada (con patrones diferenciados para armas blancas y de fuego), la ocurrencia en espacios públicos y la localización en cabeceras municipales. Estas asociaciones, cuantificadas a través de métricas como el lift y la confianza, permiten construir perfiles de riesgo detallados que van más allá de las frecuencias simples.
+En general, las reglas extraídas permiten diferenciar perfiles de riesgo clave. Mientras que el perfil masculino está fuertemente ligado a la violencia urbana general, el análisis específico sobre mujeres revela una vulnerabilidad particular al uso de armas de fuego en espacios públicos. Estas asociaciones, cuantificadas a través de métricas como el lift y la confianza, permiten construir perfiles de riesgo detallados que van más allá de las frecuencias simples.
+
 
 \section{Conclusión}
 
-El análisis exploratorio y el preprocesamiento descritos son pasos fundamentales para transformar un conjunto de datos crudo, que a menudo presenta imperfecciones y desafíos como desbalances o datos faltantes, en una base sólida para análisis predictivos y descriptivos más avanzados. Se identificaron y abordaron problemas clave, como la presencia de datos faltantes significativos y la necesidad de consolidar o agrupar categorías para un mejor manejo. Las técnicas de evaluación de relaciones entre variables, como el V de Cramer y Chi-cuadrado, junto con la entropía, fueron cruciales durante la fase exploratoria para entender la estructura de los datos e informar las decisiones sobre qué variables son potencialmente más relevantes para el análisis y la modelización.
+El análisis exploratorio y el preprocesamiento descritos son pasos fundamentales para transformar un conjunto de datos crudo en una base sólida para análisis más avanzados. Se identificaron y abordaron problemas clave como la presencia de datos faltantes y la necesidad de consolidar categorías. Las técnicas de evaluación de relaciones (V de Cramer, Chi-cuadrado, entropía) fueron cruciales para informar las decisiones sobre la relevancia de las variables.
 
-Adicionalmente, la aplicación de algoritmos de reglas de asociación como \texttt{Apriori} y \texttt{FP-Growth} permitió ir más allá del análisis descriptivo, descubriendo perfiles de riesgo diferenciados. Se identificaron reglas de alta confianza y lift que asocian contextos específicos, como el uso de armas blancas en vías públicas, con un perfil de víctima masculino, mestizo y urbano; así como la conexión entre víctimas jóvenes (20-24 años) y el uso de armas de fuego en escenarios similares. Estos patrones condicionales ocultos proporcionan perfiles de riesgo específicos que pueden orientar futuras investigaciones y el desarrollo de políticas de prevención focalizadas.
+Adicionalmente, la aplicación de algoritmos de reglas de asociación como \texttt{Apriori} y \texttt{FP-Growth} permitió ir más allá del análisis descriptivo, descubriendo perfiles de riesgo diferenciados. Se identificaron patrones específicos, incluyendo aquellos relacionados con la violencia de género, donde el uso de armas de fuego se asocia fuertemente con el contexto de vía pública y el perfil demográfico de la víctima. Estos patrones condicionales ocultos proporcionan perfiles de riesgo específicos que pueden orientar futuras investigaciones y el desarrollo de políticas de prevención focalizadas.
 
 
 \begin{thebibliography}{1}
