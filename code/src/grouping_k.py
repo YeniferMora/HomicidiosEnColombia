@@ -60,13 +60,21 @@ class ClusteringHomicidios:
             'Pertenencia Grupal',
             'Mecanismo Causal',
             'Presunto Agresor',
-            'Ancestro Racial',
-            'Municipio del hecho DANE',
             'Departamento del hecho DANE',
             'Actividad Durante el Hecho',
             'Diagnostico Topográfico de la Lesión',
             'Rango de Hora del Hecho X 3 Horas',
+            'Localidad del Hecho',
         ]
+        
+        print(f"Variables seleccionadas: {self.categorical_columns}")
+    
+        #Realizar el análisis solo a sexo masculino
+        # self.df = self.df[self.df['Sexo de la victima'] == 'Mujer']
+        
+        #Realizar análisis solo en Bogotá, es deci
+        self.df = self.df[self.df['Departamento del hecho DANE'] == 'Bogotá, D.C.']
+        print(f"Dimensiones del DataFrame original: {self.df.shape}")
         
         # Filtrar solo las columnas que existen en el DataFrame
         self.categorical_columns = [col for col in self.categorical_columns if col in self.df.columns]
@@ -76,16 +84,16 @@ class ClusteringHomicidios:
         # 2. Crear dataset solo con variables seleccionadas
         self.df_processed = self.df[self.categorical_columns].copy()
         
-        # 3. Limpiar datos faltantes y valores raros
-        for col in self.categorical_columns:
-            # Reemplazar valores con baja frecuencia por "Otros"
-            value_counts = self.df_processed[col].value_counts()
-            threshold = len(self.df_processed) * 0.01  # 1% del total
-            rare_values = value_counts[value_counts < threshold].index
-            self.df_processed[col] = self.df_processed[col].replace(rare_values, 'Otros')
+        # # 3. Limpiar datos faltantes y valores raros
+        # for col in self.categorical_columns:
+        #     # Reemplazar valores con baja frecuencia por "Otros"
+        #     value_counts = self.df_processed[col].value_counts()
+        #     threshold = len(self.df_processed) * 0.01  # 1% del total
+        #     rare_values = value_counts[value_counts < threshold].index
+        #     self.df_processed[col] = self.df_processed[col].replace(rare_values, 'Otros')
             
             # Manejar valores faltantes
-            self.df_processed[col] = self.df_processed[col].fillna('Sin información')
+           # self.df_processed[col] = self.df_processed[col].fillna('Sin información')
         
         # 4. Aplicar MCA para reducción de dimensionalidad
         print("\nAplicando MCA para reducción de dimensionalidad...")
@@ -228,15 +236,6 @@ class ClusteringHomicidios:
         plt.savefig(os.path.join(self.results_path, 'kmeans_mca_results.png'))
         # Cerrar figura
         plt.close()
-        # self.save_results("kmeans_mca", {
-        #     'clusters': best_clusters,
-        #     'k_optimal': best_k,
-        #     'silhouette_score': best_score,
-        #     'centroids': best_centroids,
-        #     'inertias': inertias,
-        #     'silhouette_scores': silhouette_scores,
-        #     'k_range': k_range
-        # })
         
         print(f"Mejor K: {best_k} con Silhouette Score: {best_score:.3f}")
         return best_clusters
@@ -543,7 +542,7 @@ class ClusteringHomicidios:
         self.algoritmo_1_kmodes()
         self.algoritmo_2_kmeans_mca()
         self.algoritmo_3_gaussian_mixture()
-        #self.algoritmo_4_dbscan_mca()
+        self.algoritmo_4_dbscan_mca()
         
         # 3. Evaluación comparativa
         metrics_df = self.evaluar_clustering()
