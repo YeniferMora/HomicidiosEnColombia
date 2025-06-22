@@ -7,7 +7,7 @@ print(f"Base Directory: {BASE_DIR}")
 print(f"Current Directory: {os.getcwd()}")
 DATA_DIR = BASE_DIR / 'data'
 RAW_DATA_PATH = DATA_DIR / 'raw' / 'data_homicidios.csv'
-PROCESSED_DATA_PATH = DATA_DIR / 'processed' / 'homicidios_preprocesados.csv'
+PROCESSED_DATA_PATH = DATA_DIR / 'processed' / 'homicidios_procesado.csv'
 
 # Configuración de análisis
 TARGET_VARIABLE = 'Circunstancia del Hecho'
