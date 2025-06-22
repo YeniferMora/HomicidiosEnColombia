@@ -11,7 +11,9 @@
 \usepackage{graphicx}
 \usepackage{cite}
 \usepackage{tabularx}
-
+\usepackage{booktabs}  % Para las líneas mejoradas (toprule, midrule, bottomrule)
+\usepackage{array}     % Para mayor control sobre las columnas
+\usepackage{siunitx}   % Opcional: para mejor alineación de números (recomendado)
 
 \begin{document}
 
@@ -322,6 +324,177 @@ El análisis exploratorio y el preprocesamiento descritos son pasos fundamentale
 
 Adicionalmente, la aplicación de algoritmos de reglas de asociación como \texttt{Apriori} y \texttt{FP-Growth} permitió ir más allá del análisis descriptivo, descubriendo perfiles de riesgo diferenciados. Se identificaron patrones específicos, incluyendo aquellos relacionados con la violencia de género, donde el uso de armas de fuego se asocia fuertemente con el contexto de vía pública y el perfil demográfico de la víctima. Estos patrones condicionales ocultos proporcionan perfiles de riesgo específicos que pueden orientar futuras investigaciones y el desarrollo de políticas de prevención focalizadas.
 
+\section{Análisis de Agrupación (Clustering)}
+\label{sec:clustering}
+
+Como complemento al análisis exploratorio y las reglas de asociación previamente desarrollados, se implementó un análisis de agrupación con el objetivo de identificar perfiles homogéneos latentes dentro de los datos de homicidios. Este enfoque no supervisado permite descubrir patrones estructurales sin asumir categorías predefinidas, proporcionando una perspectiva adicional sobre las dinámicas subyacentes de la violencia en Colombia.
+
+\subsection{Diseño Metodológico del Análisis}
+
+\subsubsection{Estrategia Dual de Análisis}
+Se desarrolló un análisis de clustering en dos niveles complementarios para proporcionar una comprensión integral del fenómeno:
+
+\begin{itemize}
+    \item \textbf{Análisis Nacional:} Enfocado en la identificación de patrones generales de violencia en Colombia utilizando la totalidad del conjunto de datos. Este nivel permite caracterizar tendencias macroscópicas y identificar perfiles de riesgo transversales al territorio nacional.
+    
+    \item \textbf{Análisis Local - Bogotá:} Concentrado específicamente en los homicidios ocurridos en la capital, aprovechando la riqueza informativa del contexto metropolitano para identificar patrones específicos de violencia urbana que pueden diferir de las tendencias nacionales.
+\end{itemize}
+
+Esta estrategia dual facilita el contraste entre patrones generales y especificidades regionales, proporcionando elementos tanto para políticas nacionales como para intervenciones locales focalizadas.
+
+\subsubsection{Tratamiento del Desbalance de Datos}
+Uno de los principales desafíos metodológicos identificados fue el marcado desbalance de género en los datos originales (aproximadamente 90\% hombres vs 10\% mujeres). Para el análisis nacional, se implementó una estrategia de balanceamiento mediante selección aleatoria estratificada:
+
+\begin{itemize}
+    \item \textbf{Mujeres:} 8,967 casos (totalidad disponible)
+    \item \textbf{Hombres:} 11,967 casos (muestra aleatoria con semilla 42 para reproducibilidad)
+    \item \textbf{Dataset balanceado final:} 20,934 casos
+\end{itemize}
+
+Este balanceamiento previene que los algoritmos de clustering generen agrupaciones sesgadas únicamente por la diferencia de frecuencias de género, permitiendo que emerjan patrones más complejos y multidimensionales.
+
+\subsubsection{Selección y Transformación de Variables}
+
+\paragraph{Criterios de Selección}
+La selección de variables se fundamentó en los hallazgos del análisis exploratorio previo, priorizando aquellas que mostraron mayor capacidad discriminatoria según las métricas de entropía y asociación estadística calculadas anteriormente.
+
+\begin{itemize}
+    \item \textbf{Variables Nacionales (12 dimensiones):}
+    \begin{itemize}
+        \item Demográficas: Grupo de edad, sexo, escolaridad, ancestro racial
+        \item Evento: Mecanismo causal, diagnóstico topográfico, presunto agresor, zona y escenario del hecho
+        \item Espacio-temporales: Departamento, mes y año del hecho
+    \end{itemize}
+    
+    \item \textbf{Variables Bogotá (15 dimensiones):}
+    \begin{itemize}
+        \item Además de las variables nacionales, se incorporaron dimensiones específicas como localidad del hecho, rango horario y circunstancia del hecho, que proporcionan mayor granularidad para el análisis urbano.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Estrategias de Transformación}
+
+\begin{itemize}
+    \item \textbf{Análisis Nacional:}
+    \begin{itemize}
+        \item Se aplicó una secuencia de transformaciones consistente en: (1) codificación One-Hot Encoding para variables categóricas, (2) normalización con StandardScaler para homogeneizar escalas, y (3) reducción dimensional con PCA para optimizar el rendimiento computacional manteniendo la varianza explicativa.
+    \end{itemize}
+    
+    \item \textbf{Análisis Bogotá:}
+    \begin{itemize}
+        \item Se implementó Análisis de Correspondencias Múltiples (MCA) como técnica de reducción dimensional específicamente diseñada para variables categóricas, transformando las 15 variables originales en coordenadas de 10 dimensiones que preservan la máxima varianza explicada.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Implementación de Algoritmos y Evaluación}
+
+\subsubsection{Algoritmos Implementados}
+Se emplearon cuatro algoritmos complementarios, cada uno con fortalezas específicas para diferentes aspectos del análisis:
+
+\begin{itemize}
+    \item \textbf{DBSCAN (Density-Based Spatial Clustering):}
+    \begin{itemize}
+        \item Nacional: eps=90, min\_samples=2, identificando 2 clusters principales más ruido
+        \item Bogotá: eps=1.5, min\_samples=15, con coeficiente de Silhouette de 0.826
+    \end{itemize}
+    
+    \item \textbf{Gaussian Mixture Model (GMM):}
+    \begin{itemize}
+        \item Nacional: 4 componentes óptimos
+        \item Bogotá: 10 componentes con BIC=-122,316.30
+    \end{itemize}
+    
+    \item \textbf{K-Modes (específico para Bogotá):}
+    \begin{itemize}
+        \item Algoritmo especializado en variables categóricas con K=10 óptimo (costo: 54,862)
+    \end{itemize}
+    
+    \item \textbf{K-Means con coordenadas MCA (específico para Bogotá):}
+    \begin{itemize}
+        \item K=3 óptimo con coeficiente de Silhouette de 0.420
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Evaluación Comparativa}
+La evaluación se realizó mediante múltiples métricas internas para garantizar la robustez de los resultados:
+
+\begin{table}[t]
+\centering
+\caption{Evaluación comparativa de algoritmos para Bogotá}
+\label{tab:evaluacion_algoritmos}
+\small
+\begin{tabular}{@{}lcrcr@{}}
+\toprule
+\textbf{Algoritmo} & \textbf{N} & \textbf{Silh.} & \textbf{C-H} & \textbf{D-B} \\ 
+\midrule
+K-Modes           & 10  & -0.078  & 119.863  & 6.826  \\
+K-Means+MCA       & 3   & 0.420   & 940.027  & 1.916  \\
+GMM               & 10  & 0.022   & 518.920  & 2.370  \\
+DBSCAN            & 2   & 0.826   & 860.150  & 0.170  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+DBSCAN demostró el mejor desempeño general, particularmente en el análisis de Bogotá, con el coeficiente de Silhouette más alto (0.826) y el índice Davies-Bouldin más bajo (0.170), indicando clusters bien definidos y separados.
+
+\subsection{Caracterización de Perfiles Identificados}
+
+\subsubsection{Perfiles Nacionales}
+El análisis nacional con DBSCAN reveló una estructura tripartita:
+
+\begin{itemize}
+    \item \textbf{Cluster Principal (Cluster 0):} Representa el patrón dominante de violencia interpersonal urbana, caracterizado por una distribución geográfica y temporal amplia que refleja las modalidades más comunes de homicidio en el país.
+    
+    \item \textbf{Cluster Secundario (Cluster 1):} Agrupa casos con diferencias significativas respecto al patrón principal, mostrando especificidades regionales y modalidades particulares de violencia que requieren atención diferenciada.
+    
+    \item \textbf{Casos Atípicos (Ruido -1):} Incluye modalidades excepcionales de violencia que, aunque representan una proporción menor del total, poseen relevancia criminológica por su singularidad y pueden indicar fenómenos emergentes o especializados.
+\end{itemize}
+
+\subsubsection{Perfiles Bogotá}
+El análisis específico de Bogotá proporcionó una caracterización más granular:
+
+\begin{itemize}
+    \item \textbf{Cluster Principal:}
+    \begin{itemize}
+        \item Perfil demográfico: 91.2\% víctimas masculinas, concentración en edades 20-24 años (19.8\%)
+        \item Contexto espacial: 98.7\% en cabeceras municipales, 71.1\% en vía pública
+        \item Características del evento: 56.1\% con armas de fuego, distribución temporal concentrada en domingos (22.9\%)
+        \item Concentración geográfica: Ciudad Bolívar como localidad más afectada (18.8\%)
+    \end{itemize}
+    
+    \item \textbf{Cluster Específico:}
+    \begin{itemize}
+        \item Perfil altamente homogéneo: 100\% víctimas masculinas, 78.9\% entre 20-24 años
+        \item Modalidad distintiva: 100\% con agentes explosivos
+        \item Contexto: 100\% asociado a conflicto armado/terrorismo, ocurrencia en lugares de esparcimiento
+    \end{itemize}
+    
+    \item \textbf{Casos Atípicos:}
+    \begin{itemize}
+        \item Mayor diversidad demográfica: 24.4\% víctimas femeninas
+        \item Heterogeneidad en mecanismos: incluye agentes tóxicos (17.9\%) y múltiples tipos de armas
+        \item Representan modalidades excepcionales dentro del contexto bogotano
+    \end{itemize}
+\end{itemize}
+
+\subsection{Implicaciones y Conclusiones}
+El análisis de agrupación multinivel reveló una arquitectura compleja en los datos de homicidios colombianos que complementa y enriquece los hallazgos del análisis exploratorio y las reglas de asociación.
+
+\subsubsection{Hallazgos Estructurales}
+
+\begin{itemize}
+    \item \textbf{Nivel Nacional:} La identificación de dos patrones densos principales junto con casos atípicos confirma la coexistencia de modalidades sistemáticas de violencia con fenómenos excepcionales. La ausencia de un "codo" claro en las métricas de evaluación sugiere la naturaleza continua y multifacética del fenómeno violento en Colombia.
+    
+    \item \textbf{Nivel Local:} El análisis de Bogotá demostró que la segmentación geográfica permite mayor precisión en la caracterización de patrones, revelando especificidades urbanas que no emergen en el análisis nacional. La identificación de un cluster específico asociado a terrorismo/conflicto armado ilustra la capacidad del análisis para detectar fenómenos locales particulares.
+\end{itemize}
+
+\subsubsection{Contribución Metodológica}
+
+\begin{itemize}
+    \item La implementación de múltiples algoritmos de clustering proporcionó perspectivas complementarias sobre la estructura latente de los datos. DBSCAN se destacó por su capacidad para identificar clusters de densidad variable y manejar ruido, características particularmente relevantes para datos criminológicos que inherentemente contienen casos atípicos significativos.
+    
+    \item El enfoque multinivel (nacional-local) demostró ser fundamental para capturar tanto patrones generales como especificidades regionales, proporcionando una base sólida para el diseño de estrategias diferenciadas de prevención y control de la violencia que consideren tanto las tendencias nacionales como las dinámicas locales específicas.
+\end{itemize}
 
 \begin{thebibliography}{1}
 \bibliographystyle{IEEEtran}
