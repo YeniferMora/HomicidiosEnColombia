@@ -7,4 +7,5 @@ scikit-learn
 prince
 tabulate
 jupyter
+mlxtend
 kmodes

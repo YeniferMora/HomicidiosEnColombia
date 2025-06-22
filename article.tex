@@ -250,9 +250,69 @@ Las variables prioritarias identificadas incluyen:
 
 Su combinación facilita una selección de características objetiva, interpretable y basada en evidencia, lo cual es crucial para el éxito de modelos predictivos y para generar análisis descriptivos robustos.
 
+
+\section*{VI. ANÁLISIS DE REGLAS DE ASOCIACIÓN}
+
+Para complementar el análisis exploratorio y descubrir patrones de coocurrencia no evidentes entre las características de los homicidios, se aplicaron técnicas de minería de reglas de asociación. El objetivo de este análisis fue identificar qué combinaciones de atributos aparecen juntas con frecuencia en los registros, formulando reglas en el formato \textit{``SI \{A\} ENTONCES \{B\}''}. Se utilizaron los algoritmos \texttt{Apriori} y \texttt{FP-Growth}, implementados a través de la librería \texttt{mlxtend} en Python, para llevar a cabo esta tarea.
+
+\subsection*{A. Preparación de Datos para Asociación}
+
+El primer paso consistió en adecuar el conjunto de datos para los algoritmos de asociación, lo cual requirió una selección y transformación específica de las variables.
+
+\begin{enumerate}
+    \item[1.)] \textit{Selección de Características:} Se seleccionó un subconjunto de 9 variables categóricas consideradas relevantes para la identificación de patrones contextuales y demográficos, basándose en los hallazgos del análisis exploratorio. Las variables incluidas fueron: \texttt{'Grupo de edad de la victima'}, \texttt{'Sexo de la victima'}, \texttt{'Mes del hecho'}, \texttt{'Dia del hecho'}, \texttt{'Rango de Hora del Hecho X 3 Horas'}, \texttt{'Escenario del Hecho'}, \texttt{'Zona del Hecho'}, \texttt{'Mecanismo Causal'} y \texttt{'Ancestro Racial'}.
+
+    \item[2.)] \textit{Transformación a Formato Transaccional:} Los algoritmos de asociación requieren que los datos estén en un formato de matriz binaria, donde cada fila representa una transacción (en este caso, un homicidio) y cada columna representa un ítem (una característica específica, como \texttt{``Sexo\_de\_la\_victima\_Hombre''}). Para lograr esto, se aplicó la técnica de \textit{one-hot encoding} al subconjunto de datos seleccionado. Esta transformación resultó en una matriz de 111.029 transacciones y 115 ítems únicos.
+\end{enumerate}
+
+\subsection*{B. Metodología y Generación de Reglas}
+
+La generación de reglas se fundamentó en tres métricas clave para evaluar su relevancia y fiabilidad:
+
+\begin{itemize}
+    \item \textbf{Soporte (\textit{Support}):} Mide la frecuencia de un conjunto de ítems en el total de transacciones. Indica la popularidad de un patrón.
+    \item \textbf{Confianza (\textit{Confidence}):} Mide la probabilidad de que ocurra el consecuente \{B\} de una regla, dado que ya ocurrió el antecedente \{A\}. Representa la fiabilidad de la inferencia.
+    \item \textbf{Elevación (\textit{Lift}):} Mide cuánto más probable es que ocurra el consecuente \{B\} cuando el antecedente \{A\} está presente, en comparación con la probabilidad de que \{B\} ocurra por sí solo. Un valor de \textit{lift} \textgreater{} 1 indica una asociación positiva y, por tanto, una regla potencialmente interesante.
+\end{itemize}
+
+Para definir los parámetros de los algoritmos, se utilizó el método del codo (\textit{Elbow Method}), graficando el número de conjuntos de ítems frecuentes encontrados para distintos umbrales de soporte. Aunque no se observó un ``codo'' pronunciado, se seleccionó un \textbf{soporte mínimo de 0.05}, ya que ofrecía un equilibrio entre obtener un número manejable de reglas significativas y no descartar patrones relevantes.
+
+Con este soporte, se aplicaron tanto \texttt{Apriori} como \texttt{FP-Growth}, obteniendo en ambos casos 649 conjuntos de ítems frecuentes. A partir de estos, se generaron reglas de asociación que fueron filtradas para conservar únicamente aquellas con un \textbf{lift \textgreater{} 1.2} y una \textbf{confianza \textgreater{} 0.6}, resultando en un conjunto final de 97 reglas significativas. La validación cruzada entre ambos algoritmos confirmó que el conjunto de reglas generado fue idéntico, asegurando la robustez del resultado.
+
+\subsection*{C. Hallazgos Principales del Análisis de Asociación}
+
+El análisis de las 97 reglas finales reveló perfiles y contextos de riesgo muy definidos. A continuación, se presentan algunos de los hallazgos más destacados que ilustran la diversidad de los patrones encontrados.
+
+\begin{enumerate}
+    \item[1.)] \textit{Patrón de Violencia Urbana con Arma Blanca:} La regla con la mayor elevación (lift: 1.37) descubierta, indica una asociación fuerte e inesperada entre el tipo de arma y el contexto demográfico-geográfico.
+    \begin{quote}
+        \textbf{SI} el escenario del hecho es la \textbf{vía pública} y el mecanismo causal es un \textbf{arma cortopunzante},
+        \textbf{ENTONCES} la víctima es un \textbf{hombre} de ancestro \textbf{mestizo} y el crimen ocurre en una \textbf{cabecera municipal}.
+    \end{quote}
+    Con una confianza del 69.2\%, esta regla sugiere que la combinación de un ataque con arma blanca en la vía pública incrementa en un 37\% la probabilidad de que el perfil de la víctima y el lugar correspondan a un hombre mestizo en un área urbana, en comparación con la probabilidad general de que esto ocurra.
+
+    \item[2.)] \textit{Asociación entre Víctimas Jóvenes y Armas de Fuego:} Otro patrón distintivo de alto interés (lift: 1.30) vincula directamente al grupo etario de 20 a 24 años con el uso de armas de fuego.
+    \begin{quote}
+        \textbf{SI} el escenario es la \textbf{vía pública} y la víctima tiene entre \textbf{20 y 24 años},
+        \textbf{ENTONCES} la víctima es un \textbf{hombre}, el hecho ocurre en una \textbf{cabecera municipal} y el mecanismo es un \textbf{proyectil de arma de fuego}.
+    \end{quote}
+    Esta regla, con una confianza del 62.4\%, es particularmente relevante ya que define un perfil de riesgo muy específico: los hombres jóvenes en espacios públicos no solo son víctimas frecuentes, sino que su situación está fuertemente asociada a la violencia con armas de fuego en centros urbanos.
+
+    \item[3.)] \textit{Fiabilidad del Contexto Urbano:} Al analizar las reglas de mayor confianza, se confirma la naturaleza urbana de ciertos tipos de violencia. Una de las reglas más fiables (confianza: 90.2\%) establece que:
+    \begin{quote}
+        \textbf{SI} la víctima es un \textbf{hombre} de ancestro \textbf{mestizo} asesinado con \textbf{arma cortopunzante} en la \textbf{vía pública},
+        \textbf{ENTONCES} el hecho ocurre en una \textbf{cabecera municipal}.
+    \end{quote}
+    La altísima confianza de esta regla la convierte en una afirmación predictiva robusta: bajo estas condiciones, es casi seguro que el crimen es de carácter urbano.
+\end{enumerate}
+
+En general, las reglas extraídas refuerzan la interconexión entre ser víctima de homicidio siendo hombre, el tipo de arma utilizada (con patrones diferenciados para armas blancas y de fuego), la ocurrencia en espacios públicos y la localización en cabeceras municipales. Estas asociaciones, cuantificadas a través de métricas como el lift y la confianza, permiten construir perfiles de riesgo detallados que van más allá de las frecuencias simples.
+
 \section{Conclusión}
 
 El análisis exploratorio y el preprocesamiento descritos son pasos fundamentales para transformar un conjunto de datos crudo, que a menudo presenta imperfecciones y desafíos como desbalances o datos faltantes, en una base sólida para análisis predictivos y descriptivos más avanzados. Se identificaron y abordaron problemas clave, como la presencia de datos faltantes significativos y la necesidad de consolidar o agrupar categorías para un mejor manejo. Las técnicas de evaluación de relaciones entre variables, como el V de Cramer y Chi-cuadrado, junto con la entropía, fueron cruciales durante la fase exploratoria para entender la estructura de los datos e informar las decisiones sobre qué variables son potencialmente más relevantes para el análisis y la modelización.
+
+Adicionalmente, la aplicación de algoritmos de reglas de asociación como \texttt{Apriori} y \texttt{FP-Growth} permitió ir más allá del análisis descriptivo, descubriendo perfiles de riesgo diferenciados. Se identificaron reglas de alta confianza y lift que asocian contextos específicos, como el uso de armas blancas en vías públicas, con un perfil de víctima masculino, mestizo y urbano; así como la conexión entre víctimas jóvenes (20-24 años) y el uso de armas de fuego en escenarios similares. Estos patrones condicionales ocultos proporcionan perfiles de riesgo específicos que pueden orientar futuras investigaciones y el desarrollo de políticas de prevención focalizadas.
 
 
 \begin{thebibliography}{1}
