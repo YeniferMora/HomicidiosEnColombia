@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 from scipy import stats
 from tabulate import tabulate
-from .config import TARGET_VARIABLE, CATEGORICAL_VARS
+from config import TARGET_VARIABLE, CATEGORICAL_VARS
 
 def exploratory_analysis(df):
     # Identificación de Variables

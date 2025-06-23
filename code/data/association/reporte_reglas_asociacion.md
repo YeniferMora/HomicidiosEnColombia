@@ -15,7 +15,7 @@
 Estas reglas representan las relaciones más inesperadas o sorprendentes en los datos.
 
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Mecanismo Causal_Corto punzante )
+SI ( Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Ancestro Racial_Mestizo Y Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -25,7 +25,7 @@ ENTONCES ( Ancestro Racial_Mestizo Y Sexo de la victima_Hombre Y Zona del Hecho_
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Sexo de la victima_Hombre Y Mecanismo Causal_Corto punzante )
+SI ( Sexo de la victima_Hombre Y Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Ancestro Racial_Mestizo Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -35,7 +35,7 @@ ENTONCES ( Ancestro Racial_Mestizo Y Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Mecanismo Causal_Corto punzante )
+SI ( Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Ancestro Racial_Mestizo Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -45,7 +45,7 @@ ENTONCES ( Ancestro Racial_Mestizo Y Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Ancestro Racial_Mestizo Y Mecanismo Causal_Corto punzante )
+SI ( Ancestro Racial_Mestizo Y Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -55,8 +55,8 @@ ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Mecanismo Causal_Corto punzante )
-ENTONCES ( Zona del Hecho_Cabecera municipal Y Sexo de la victima_Hombre )
+SI ( Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
+ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
   - Soporte: 0.0813
@@ -65,8 +65,8 @@ ENTONCES ( Zona del Hecho_Cabecera municipal Y Sexo de la victima_Hombre )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Grupo de edad de la victima_(20 a 24) )
-ENTONCES ( Mecanismo Causal_Proyectil de arma de fuego Y Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
+SI ( Grupo de edad de la victima_(20 a 24) Y Escenario del Hecho_vía pública )
+ENTONCES ( Zona del Hecho_Cabecera municipal Y Sexo de la victima_Hombre Y Mecanismo Causal_Proyectil de arma de fuego )
 
 **Métricas:**
   - Soporte: 0.0700
@@ -75,8 +75,8 @@ ENTONCES ( Mecanismo Causal_Proyectil de arma de fuego Y Sexo de la victima_Homb
 
 ---
 ### Regla
-SI ( Ancestro Racial_Mestizo Y Mecanismo Causal_Proyectil de arma de fuego Y Zona del Hecho_Cabecera municipal Y Grupo de edad de la victima_(20 a 24) )
-ENTONCES ( Escenario del Hecho_vía pública Y Sexo de la victima_Hombre )
+SI ( Ancestro Racial_Mestizo Y Zona del Hecho_Cabecera municipal Y Grupo de edad de la victima_(20 a 24) Y Mecanismo Causal_Proyectil de arma de fuego )
+ENTONCES ( Sexo de la victima_Hombre Y Escenario del Hecho_vía pública )
 
 **Métricas:**
   - Soporte: 0.0532
@@ -85,8 +85,8 @@ ENTONCES ( Escenario del Hecho_vía pública Y Sexo de la victima_Hombre )
 
 ---
 ### Regla
-SI ( Mecanismo Causal_Proyectil de arma de fuego Y Zona del Hecho_Cabecera municipal Y Grupo de edad de la victima_(20 a 24) )
-ENTONCES ( Escenario del Hecho_vía pública Y Sexo de la victima_Hombre )
+SI ( Zona del Hecho_Cabecera municipal Y Grupo de edad de la victima_(20 a 24) Y Mecanismo Causal_Proyectil de arma de fuego )
+ENTONCES ( Sexo de la victima_Hombre Y Escenario del Hecho_vía pública )
 
 **Métricas:**
   - Soporte: 0.0700
@@ -95,7 +95,7 @@ ENTONCES ( Escenario del Hecho_vía pública Y Sexo de la victima_Hombre )
 
 ---
 ### Regla
-SI ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal Y Ancestro Racial_Mestizo Y Mecanismo Causal_Proyectil de arma de fuego Y Grupo de edad de la victima_(20 a 24) )
+SI ( Sexo de la victima_Hombre Y Mecanismo Causal_Proyectil de arma de fuego Y Zona del Hecho_Cabecera municipal Y Grupo de edad de la victima_(20 a 24) Y Ancestro Racial_Mestizo )
 ENTONCES ( Escenario del Hecho_vía pública )
 
 **Métricas:**
@@ -105,8 +105,8 @@ ENTONCES ( Escenario del Hecho_vía pública )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Ancestro Racial_Mestizo Y Grupo de edad de la victima_(20 a 24) )
-ENTONCES ( Mecanismo Causal_Proyectil de arma de fuego Y Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
+SI ( Ancestro Racial_Mestizo Y Grupo de edad de la victima_(20 a 24) Y Escenario del Hecho_vía pública )
+ENTONCES ( Sexo de la victima_Hombre Y Mecanismo Causal_Proyectil de arma de fuego Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
   - Soporte: 0.0532
@@ -119,7 +119,7 @@ ENTONCES ( Mecanismo Causal_Proyectil de arma de fuego Y Sexo de la victima_Homb
 Estas reglas son las más frecuentemente correctas. Si ves la condición 'SI', puedes estar muy seguro del resultado 'ENTONCES'.
 
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Ancestro Racial_Mestizo Y Sexo de la victima_Hombre Y Mecanismo Causal_Corto punzante )
+SI ( Ancestro Racial_Mestizo Y Sexo de la victima_Hombre Y Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -129,7 +129,7 @@ ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Ancestro Racial_Mestizo Y Mecanismo Causal_Corto punzante )
+SI ( Ancestro Racial_Mestizo Y Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -139,7 +139,7 @@ ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Sexo de la victima_Hombre Y Mecanismo Causal_Corto punzante )
+SI ( Sexo de la victima_Hombre Y Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -149,7 +149,7 @@ ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Mecanismo Causal_Corto punzante )
+SI ( Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -159,7 +159,7 @@ ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Rango de Hora del Hecho X 3 Horas_Sin información Y Mecanismo Causal_Corto punzante )
+SI ( Rango de Hora del Hecho X 3 Horas_Sin información Y Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -169,7 +169,7 @@ ENTONCES ( Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Ancestro Racial_Mestizo Y Mecanismo Causal_Corto punzante )
+SI ( Ancestro Racial_Mestizo Y Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
 ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -179,8 +179,8 @@ ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Mecanismo Causal_Corto punzante )
-ENTONCES ( Zona del Hecho_Cabecera municipal Y Sexo de la victima_Hombre )
+SI ( Mecanismo Causal_Corto punzante Y Escenario del Hecho_vía pública )
+ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
   - Soporte: 0.0813
@@ -189,7 +189,7 @@ ENTONCES ( Zona del Hecho_Cabecera municipal Y Sexo de la victima_Hombre )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Ancestro Racial_Mestizo Y Grupo de edad de la victima_(20 a 24) )
+SI ( Ancestro Racial_Mestizo Y Grupo de edad de la victima_(20 a 24) Y Escenario del Hecho_vía pública )
 ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -199,7 +199,7 @@ ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Grupo de edad de la victima_(20 a 24) )
+SI ( Grupo de edad de la victima_(20 a 24) Y Escenario del Hecho_vía pública )
 ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**
@@ -209,7 +209,7 @@ ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 ---
 ### Regla
-SI ( Escenario del Hecho_vía pública Y Ancestro Racial_Mestizo Y Grupo de edad de la victima_(25 a 29) )
+SI ( Ancestro Racial_Mestizo Y Grupo de edad de la victima_(25 a 29) Y Escenario del Hecho_vía pública )
 ENTONCES ( Sexo de la victima_Hombre Y Zona del Hecho_Cabecera municipal )
 
 **Métricas:**

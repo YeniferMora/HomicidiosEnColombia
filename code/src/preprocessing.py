@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 from sklearn.calibration import LabelEncoder
 from sklearn.feature_selection import chi2
-from .config import PROCESSED_DATA_PATH, TARGET_VARIABLE, CATEGORICAL_VARS
+from config import PROCESSED_DATA_PATH, TARGET_VARIABLE, CATEGORICAL_VARS
 
 def preprocess_data(df):
     """Realiza todas las operaciones de preprocesamiento."""

@@ -1,10 +1,11 @@
-from src.data_loading import load_raw_data
-from src.preprocessing import preprocess_data, save_processed_data
-from src.exploratory_analysis import exploratory_analysis
-from src.association_rules import create_association_rules
-from src.config import PROCESSED_DATA_PATH
-from src.grouping_k import ClusteringHomicidios
-from src.nationalGrouping import NationalGrouping
+
+from data_loading import load_raw_data
+from preprocessing import preprocess_data, save_processed_data
+from exploratory_analysis import exploratory_analysis
+from association_rules import create_association_rules
+from config import PROCESSED_DATA_PATH
+from grouping_k import ClusteringHomicidios
+from nationalGrouping import NationalGrouping
 
 def main():
     print("Cargando datos...")
