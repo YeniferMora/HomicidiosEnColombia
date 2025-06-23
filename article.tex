@@ -317,13 +317,6 @@ El análisis de las 97 reglas finales, junto con el análisis específico sobre 
 
 En general, las reglas extraídas permiten diferenciar perfiles de riesgo clave. Mientras que el perfil masculino está fuertemente ligado a la violencia urbana general, el análisis específico sobre mujeres revela una vulnerabilidad particular al uso de armas de fuego en espacios públicos. Estas asociaciones, cuantificadas a través de métricas como el lift y la confianza, permiten construir perfiles de riesgo detallados que van más allá de las frecuencias simples.
 
-
-\section{Conclusión}
-
-El análisis exploratorio y el preprocesamiento descritos son pasos fundamentales para transformar un conjunto de datos crudo en una base sólida para análisis más avanzados. Se identificaron y abordaron problemas clave como la presencia de datos faltantes y la necesidad de consolidar categorías. Las técnicas de evaluación de relaciones (V de Cramer, Chi-cuadrado, entropía) fueron cruciales para informar las decisiones sobre la relevancia de las variables.
-
-Adicionalmente, la aplicación de algoritmos de reglas de asociación como \texttt{Apriori} y \texttt{FP-Growth} permitió ir más allá del análisis descriptivo, descubriendo perfiles de riesgo diferenciados. Se identificaron patrones específicos, incluyendo aquellos relacionados con la violencia de género, donde el uso de armas de fuego se asocia fuertemente con el contexto de vía pública y el perfil demográfico de la víctima. Estos patrones condicionales ocultos proporcionan perfiles de riesgo específicos que pueden orientar futuras investigaciones y el desarrollo de políticas de prevención focalizadas.
-
 \section{Análisis de Agrupación (Clustering)}
 \label{sec:clustering}
 
@@ -386,6 +379,8 @@ La selección de variables se fundamentó en los hallazgos del análisis explora
     \end{itemize}
 \end{itemize}
 
+Para validar la coherencia interna de los grupos formados, se utilizaron métricas como el coeficiente de Silhouette, el índice de Calinski-Harabasz y el índice de Davies-Bouldin. DBSCAN mostró el mejor desempeño general, especialmente en Bogotá, con el coeficiente de Silhouette más alto (0.826) y el índice Davies-Bouldin más bajo (0.170), lo que sugiere que los clusters son compactos y bien separados (Tabla 1). En el análisis nacional, DBSCAN también alcanzó un valor alto (0.824), lo que respalda la validez de los perfiles generados.
+
 \subsection{Implementación de Algoritmos y Evaluación}
 
 \subsubsection{Algoritmos Implementados}
@@ -434,48 +429,39 @@ DBSCAN            & 2   & 0.826   & 860.150  & 0.170  \\
 \bottomrule
 \end{tabular}
 \end{table}
-
 DBSCAN demostró el mejor desempeño general, particularmente en el análisis de Bogotá, con el coeficiente de Silhouette más alto (0.826) y el índice Davies-Bouldin más bajo (0.170), indicando clusters bien definidos y separados.
-
 \subsection{Caracterización de Perfiles Identificados}
 
 \subsubsection{Perfiles Nacionales}
-El análisis nacional con DBSCAN reveló una estructura tripartita:
+
+El análisis nacional con DBSCAN (coeficiente de silueta promedio = 0.824) identificó cuatro clusters y un grupo de casos atípicos. Cada uno refleja perfiles diferenciados de víctimas de homicidio:
 
 \begin{itemize}
-    \item \textbf{Cluster Principal (Cluster 0):} Representa el patrón dominante de violencia interpersonal urbana, caracterizado por una distribución geográfica y temporal amplia que refleja las modalidades más comunes de homicidio en el país.
-    
-    \item \textbf{Cluster Secundario (Cluster 1):} Agrupa casos con diferencias significativas respecto al patrón principal, mostrando especificidades regionales y modalidades particulares de violencia que requieren atención diferenciada.
-    
-    \item \textbf{Casos Atípicos (Ruido -1):} Incluye modalidades excepcionales de violencia que, aunque representan una proporción menor del total, poseen relevancia criminológica por su singularidad y pueden indicar fenómenos emergentes o especializados.
+    \item \textbf{Cluster 0 (Mayoritario):} Patrón dominante de violencia interpersonal. Víctimas en su mayoría hombres (57.2\%), entre 20 y 34 años, con baja escolaridad y ancestro mestizo. Predomina el uso de arma de fuego (66.9\%), lesiones múltiples y ocurrencia en vía pública de cabeceras municipales, especialmente en Valle del Cauca, Antioquia y Bogotá.
+
+    \item \textbf{Cluster 1 (Femenino):} Exclusivo de mujeres (100\%) entre 40 y 54 años. Se asocia al uso de agentes cáusticos y escenarios domésticos o rurales. Podría reflejar casos de violencia intrafamiliar o de género.
+
+    \item \textbf{Cluster 2 (Mixto):} Víctimas hombres y mujeres jóvenes (20-29 años), con ataques por arma de fuego. Se presenta en zonas rurales y urbanas, principalmente en Caquetá y Cundinamarca, lo que sugiere posible relación con violencia asociada al conflicto armado.
+
+    \item \textbf{Cluster 3 (Joven masculino):} Exclusivo de hombres entre 18 y 29 años, con estrangulamiento como mecanismo común. Asociado a contextos específicos como estaciones de servicio y viviendas.
+
+    \item \textbf{Casos Atípicos (Ruido -1):} Agrupa víctimas inusuales como niños pequeños o personas con escolaridad extrema. Presenta mecanismos poco frecuentes (asfixia, electricidad, tóxicos) y escenarios rurales o particulares. Aunque escasos, son relevantes por su singularidad.
 \end{itemize}
+
+
 
 \subsubsection{Perfiles Bogotá}
-El análisis específico de Bogotá proporcionó una caracterización más granular:
+
+El análisis específico de Bogotá con DBSCAN (coeficiente de silueta promedio = 0.82) reveló una segmentación tripartita que complementa y detalla las dinámicas urbanas de homicidio:
 
 \begin{itemize}
-    \item \textbf{Cluster Principal:}
-    \begin{itemize}
-        \item Perfil demográfico: 91.2\% víctimas masculinas, concentración en edades 20-24 años (19.8\%)
-        \item Contexto espacial: 98.7\% en cabeceras municipales, 71.1\% en vía pública
-        \item Características del evento: 56.1\% con armas de fuego, distribución temporal concentrada en domingos (22.9\%)
-        \item Concentración geográfica: Ciudad Bolívar como localidad más afectada (18.8\%)
-    \end{itemize}
-    
-    \item \textbf{Cluster Específico:}
-    \begin{itemize}
-        \item Perfil altamente homogéneo: 100\% víctimas masculinas, 78.9\% entre 20-24 años
-        \item Modalidad distintiva: 100\% con agentes explosivos
-        \item Contexto: 100\% asociado a conflicto armado/terrorismo, ocurrencia en lugares de esparcimiento
-    \end{itemize}
-    
-    \item \textbf{Casos Atípicos:}
-    \begin{itemize}
-        \item Mayor diversidad demográfica: 24.4\% víctimas femeninas
-        \item Heterogeneidad en mecanismos: incluye agentes tóxicos (17.9\%) y múltiples tipos de armas
-        \item Representan modalidades excepcionales dentro del contexto bogotano
-    \end{itemize}
+    \item \textbf{Cluster Principal:} Representa el patrón dominante de violencia urbana. Se caracteriza por una mayoría de víctimas masculinas (91.2\%), con alta concentración en el grupo de edad de 20 a 24 años (19.8\%). El 98.7\% de los casos ocurrieron en cabeceras municipales, principalmente en vía pública (71.1\%), con prevalencia del uso de armas de fuego (56.1\%) y una marcada concentración temporal en domingos (22.9\%). Ciudad Bolívar se destacó como la localidad más afectada (18.8\%).
+
+    \item \textbf{Cluster Específico:} Conforma un grupo altamente homogéneo compuesto exclusivamente por víctimas masculinas (100\%), en su mayoría jóvenes entre 20 y 24 años (78.9\%). El uso de agentes explosivos fue total (100\%), y todos los casos se asociaron con contextos de conflicto armado o terrorismo, ocurridos en lugares de esparcimiento.
+
+    \item \textbf{Casos Atípicos (Ruido):} Agrupan modalidades excepcionales de violencia urbana. Presentan mayor diversidad demográfica (24.4\% víctimas femeninas) y una notable heterogeneidad en los mecanismos causales, incluyendo agentes tóxicos (17.9\%) y múltiples tipos de armas. Su singularidad sugiere fenómenos emergentes que requieren atención diferenciada.
 \end{itemize}
+
 
 \subsection{Implicaciones y Conclusiones}
 El análisis de agrupación multinivel reveló una arquitectura compleja en los datos de homicidios colombianos que complementa y enriquece los hallazgos del análisis exploratorio y las reglas de asociación.
@@ -495,6 +481,16 @@ El análisis de agrupación multinivel reveló una arquitectura compleja en los 
     
     \item El enfoque multinivel (nacional-local) demostró ser fundamental para capturar tanto patrones generales como especificidades regionales, proporcionando una base sólida para el diseño de estrategias diferenciadas de prevención y control de la violencia que consideren tanto las tendencias nacionales como las dinámicas locales específicas.
 \end{itemize}
+
+\section{Conclusión}
+
+El análisis exploratorio y el preprocesamiento descritos son pasos fundamentales para transformar un conjunto de datos crudo en una base sólida para análisis más avanzados. Se identificaron y abordaron problemas clave como la presencia de datos faltantes y la necesidad de consolidar categorías. Las técnicas de evaluación de relaciones (V de Cramer, Chi-cuadrado, entropía) fueron cruciales para informar las decisiones sobre la relevancia de las variables.
+
+Adicionalmente, la aplicación de algoritmos de reglas de asociación como \texttt{Apriori} y \texttt{FP-Growth} permitió ir más allá del análisis descriptivo, descubriendo perfiles de riesgo diferenciados. Se identificaron patrones específicos, incluyendo aquellos relacionados con la violencia de género, donde el uso de armas de fuego se asocia fuertemente con el contexto de vía pública y el perfil demográfico de la víctima.
+
+Complementariamente, el análisis de agrupación reveló estructuras latentes en los datos. A nivel nacional, el algoritmo DBSCAN identificó dos grandes patrones de violencia y una clase de casos atípicos. A nivel local (Bogotá), se descubrieron perfiles específicos, incluyendo un cluster fuertemente asociado a terrorismo y otro caracterizado por violencia urbana común. El enfoque multinivel y la combinación de técnicas (PCA, MCA, DBSCAN, GMM, K-Means, K-Modes) demostraron ser eficaces para revelar tanto tendencias generales como dinámicas regionales específicas.
+
+En conjunto, estos análisis ofrecen una base sólida para futuras investigaciones y para el diseño de políticas públicas de prevención más focalizadas, basadas en evidencia y adaptadas a los distintos contextos territoriales.
 
 \begin{thebibliography}{1}
 \bibliographystyle{IEEEtran}
