@@ -1,0 +1,89 @@
+# REPORTE DE CLUSTERING CON UMAP - DATOS DE HOMICIDIOS
+============================================================
+Fecha de análisis: 2025-06-28 11:23:31
+Número total de registros: 10412
+Variables utilizadas: 15
+
+## INFORMACIÓN DE LOS DATOS
+- Dataset filtrado a: Bogotá, D.C.
+- Dimensiones finales: (10412, 15)
+- Variables categóricas utilizadas:
+  * Sexo de la victima
+  * Grupo de edad de la victima
+  * Zona del Hecho
+  * Escenario del Hecho
+  * Circunstancia del Hecho
+  * Mes del hecho
+  * Dia del hecho
+  * Pertenencia Grupal
+  * Mecanismo Causal
+  * Presunto Agresor
+  * Departamento del hecho DANE
+  * Actividad Durante el Hecho
+  * Diagnostico Topográfico de la Lesión
+  * Rango de Hora del Hecho X 3 Horas
+  * Localidad del Hecho
+
+## RESULTADOS DE CLUSTERING
+### UMAP_KMEANS_DIRECT
+- Número de clusters: 3
+- Silhouette Score: 0.545
+- Calinski-Harabasz Score: 16842.87
+- Davies-Bouldin Score: 0.639
+
+### UMAP_DBSCAN_DIRECT
+- Número de clusters: 2
+- Silhouette Score: 0.736
+- Calinski-Harabasz Score: 510.12
+- Davies-Bouldin Score: 0.199
+
+### UMAP_GMM_DIRECT
+- Número de clusters: 10
+- Silhouette Score: 0.375
+- Calinski-Harabasz Score: 13249.15
+- Davies-Bouldin Score: 0.733
+
+### UMAP_KMEANS_MCA
+- Número de clusters: 7
+- Silhouette Score: 0.462
+- Calinski-Harabasz Score: 10108.43
+- Davies-Bouldin Score: 0.682
+
+### UMAP_DBSCAN_MCA
+- Número de clusters: 6
+- Silhouette Score: 0.329
+- Calinski-Harabasz Score: 1554.71
+- Davies-Bouldin Score: 0.452
+
+### UMAP_GMM_MCA
+- Número de clusters: 10
+- Silhouette Score: 0.409
+- Calinski-Harabasz Score: 10560.14
+- Davies-Bouldin Score: 0.718
+
+### UMAP_KMEANS_OPTIMIZED
+- Número de clusters: 2
+- Silhouette Score: 0.529
+- Calinski-Harabasz Score: 14420.79
+- Davies-Bouldin Score: 0.717
+
+### UMAP_DBSCAN_OPTIMIZED
+- Número de clusters: 2
+- Silhouette Score: 0.634
+- Calinski-Harabasz Score: 258.48
+- Davies-Bouldin Score: 0.279
+
+### UMAP_GMM_OPTIMIZED
+- Número de clusters: 10
+- Silhouette Score: 0.428
+- Calinski-Harabasz Score: 13613.12
+- Davies-Bouldin Score: 0.712
+
+## MEJOR ALGORITMO
+**UMAP_DBSCAN_DIRECT** con Silhouette Score: 0.736
+
+## RECOMENDACIONES
+1. El uso de UMAP mejora significativamente la estructura de los datos categóricos
+2. Se recomienda utilizar el mejor algoritmo identificado para análisis posteriores
+3. Los perfiles de clusters pueden utilizarse para identificar patrones en los homicidios
+4. Se sugiere validar los resultados con expertos en criminología
