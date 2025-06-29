@@ -1,12 +1,12 @@
 # REPORTE DE CLUSTERING CON UMAP - DATOS DE HOMICIDIOS
 ============================================================
-Fecha de análisis: 2025-06-28 11:23:31
-Número total de registros: 10412
+Fecha de análisis: 2025-06-28 21:12:13
+Número total de registros: 111029
 Variables utilizadas: 15
 
 ## INFORMACIÓN DE LOS DATOS
 - Dataset filtrado a: Bogotá, D.C.
-- Dimensiones finales: (10412, 15)
+- Dimensiones finales: (111029, 15)
 - Variables categóricas utilizadas:
   * Sexo de la victima
   * Grupo de edad de la victima
@@ -26,61 +26,64 @@ Variables utilizadas: 15
 
 ## RESULTADOS DE CLUSTERING
 ### UMAP_KMEANS_DIRECT
-- Número de clusters: 3
-- Silhouette Score: 0.545
-- Calinski-Harabasz Score: 16842.87
-- Davies-Bouldin Score: 0.639
+- Número de clusters: 2
+- Silhouette Score: 0.701
+- Calinski-Harabasz Score: 447568.97
+- Davies-Bouldin Score: 0.432
 
 ### UMAP_DBSCAN_DIRECT
-- Número de clusters: 2
-- Silhouette Score: 0.736
-- Calinski-Harabasz Score: 510.12
-- Davies-Bouldin Score: 0.199
+- Número de clusters: 4
+- Silhouette Score: 0.609
+- Calinski-Harabasz Score: 187310.73
+- Davies-Bouldin Score: 0.376
+- Puntos de ruido: 31
 
 ### UMAP_GMM_DIRECT
 - Número de clusters: 10
-- Silhouette Score: 0.375
-- Calinski-Harabasz Score: 13249.15
-- Davies-Bouldin Score: 0.733
+- Silhouette Score: 0.402
+- Calinski-Harabasz Score: 309856.19
+- Davies-Bouldin Score: 0.720
 
 ### UMAP_KMEANS_MCA
-- Número de clusters: 7
-- Silhouette Score: 0.462
-- Calinski-Harabasz Score: 10108.43
-- Davies-Bouldin Score: 0.682
+- Número de clusters: 2
+- Silhouette Score: 0.440
+- Calinski-Harabasz Score: 72106.93
+- Davies-Bouldin Score: 1.085
 
 ### UMAP_DBSCAN_MCA
-- Número de clusters: 6
-- Silhouette Score: 0.329
-- Calinski-Harabasz Score: 1554.71
-- Davies-Bouldin Score: 0.452
+- Número de clusters: 18
+- Silhouette Score: 0.039
+- Calinski-Harabasz Score: 8554.71
+- Davies-Bouldin Score: 0.474
+- Puntos de ruido: 56
 
 ### UMAP_GMM_MCA
 - Número de clusters: 10
-- Silhouette Score: 0.409
-- Calinski-Harabasz Score: 10560.14
-- Davies-Bouldin Score: 0.718
+- Silhouette Score: 0.375
+- Calinski-Harabasz Score: 98925.46
+- Davies-Bouldin Score: 0.820
 
 ### UMAP_KMEANS_OPTIMIZED
-- Número de clusters: 2
-- Silhouette Score: 0.529
-- Calinski-Harabasz Score: 14420.79
-- Davies-Bouldin Score: 0.717
+- Número de clusters: 3
+- Silhouette Score: 0.659
+- Calinski-Harabasz Score: 362502.94
+- Davies-Bouldin Score: 0.450
 
 ### UMAP_DBSCAN_OPTIMIZED
-- Número de clusters: 2
-- Silhouette Score: 0.634
-- Calinski-Harabasz Score: 258.48
-- Davies-Bouldin Score: 0.279
+- Número de clusters: 3
+- Silhouette Score: 0.623
+- Calinski-Harabasz Score: 59644.09
+- Davies-Bouldin Score: 0.309
+- Puntos de ruido: 18
 
 ### UMAP_GMM_OPTIMIZED
 - Número de clusters: 10
-- Silhouette Score: 0.428
-- Calinski-Harabasz Score: 13613.12
-- Davies-Bouldin Score: 0.712
+- Silhouette Score: 0.496
+- Calinski-Harabasz Score: 416659.88
+- Davies-Bouldin Score: 0.763
 
 ## MEJOR ALGORITMO
-**UMAP_DBSCAN_DIRECT** con Silhouette Score: 0.736
+**UMAP_KMEANS_DIRECT** con Silhouette Score: 0.701
 
 ## RECOMENDACIONES
 1. El uso de UMAP mejora significativamente la estructura de los datos categóricos

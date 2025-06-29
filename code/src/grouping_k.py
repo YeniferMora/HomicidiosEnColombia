@@ -64,8 +64,8 @@ class ClusteringHomicidiosUMAP:
         print(f"Variables seleccionadas: {self.categorical_columns}")
         
         # Filtrar solo Bogotá
-        self.df = self.df[self.df['Departamento del hecho DANE'] == 'Bogotá, D.C.']
-        print(f"Dimensiones del DataFrame filtrado: {self.df.shape}")
+        #self.df = self.df[self.df['Departamento del hecho DANE'] == 'Bogotá, D.C.']
+        #print(f"Dimensiones del DataFrame filtrado: {self.df.shape}")
         
         # Filtrar solo las columnas que existen en el DataFrame
         self.categorical_columns = [col for col in self.categorical_columns if col in self.df.columns]
