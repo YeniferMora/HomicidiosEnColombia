@@ -1,0 +1,30 @@
+{
+  "test_size": 0.2,
+  "balance_method": "none",
+  "train_shape": [
+    31875,
+    115
+  ],
+  "test_shape": [
+    7969,
+    115
+  ],
+  "original_train_distribution": {
+    "Crimen organizado / sicariato": 0.5173019607843137,
+    "Violencia interpersonal": 0.22387450980392157,
+    "Otros": 0.1568627450980392,
+    "Conflicto armado / terrorismo": 0.08075294117647058,
+    "Violencia contra población vulnerable": 0.013741176470588236,
+    "Violencia institucional / Estado": 0.006807843137254902,
+    "Violencia estructural o sociopolítica": 0.0006588235294117648
+  },
+  "final_train_distribution": {
+    "Crimen organizado / sicariato": 0.5173019607843137,
+    "Violencia interpersonal": 0.22387450980392157,
+    "Otros": 0.1568627450980392,
+    "Conflicto armado / terrorismo": 0.08075294117647058,
+    "Violencia contra población vulnerable": 0.013741176470588236,
+    "Violencia institucional / Estado": 0.006807843137254902,
+    "Violencia estructural o sociopolítica": 0.0006588235294117648
+  }
+}

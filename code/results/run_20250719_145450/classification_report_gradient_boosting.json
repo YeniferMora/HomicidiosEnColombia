@@ -1,0 +1,57 @@
+{
+  "Conflicto armado / terrorismo": {
+    "precision": 0.7811934900542495,
+    "recall": 0.6708074534161491,
+    "f1-score": 0.7218045112781954,
+    "support": 644.0
+  },
+  "Crimen organizado / sicariato": {
+    "precision": 0.7571609098567817,
+    "recall": 0.8719379092893524,
+    "f1-score": 0.8105061436140232,
+    "support": 4123.0
+  },
+  "Otros": {
+    "precision": 0.5365448504983389,
+    "recall": 0.2584,
+    "f1-score": 0.3488120950323974,
+    "support": 1250.0
+  },
+  "Violencia contra población vulnerable": {
+    "precision": 0.6785714285714286,
+    "recall": 0.6972477064220184,
+    "f1-score": 0.6877828054298643,
+    "support": 109.0
+  },
+  "Violencia estructural o sociopolítica": {
+    "precision": 0.1111111111111111,
+    "recall": 0.2,
+    "f1-score": 0.14285714285714285,
+    "support": 5.0
+  },
+  "Violencia institucional / Estado": {
+    "precision": 0.3508771929824561,
+    "recall": 0.37037037037037035,
+    "f1-score": 0.36036036036036034,
+    "support": 54.0
+  },
+  "Violencia interpersonal": {
+    "precision": 0.7161016949152542,
+    "recall": 0.757847533632287,
+    "f1-score": 0.7363834422657952,
+    "support": 1784.0
+  },
+  "accuracy": 0.7276948174174928,
+  "macro avg": {
+    "precision": 0.5616515254270886,
+    "recall": 0.5466587104471682,
+    "f1-score": 0.5440723572625398,
+    "support": 7969.0
+  },
+  "weighted avg": {
+    "precision": 0.7110724978638572,
+    "recall": 0.7276948174174928,
+    "f1-score": 0.7091760805800038,
+    "support": 7969.0
+  }
+}

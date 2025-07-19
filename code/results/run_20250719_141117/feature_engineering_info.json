@@ -1,0 +1,48 @@
+{
+  "features_selected": [
+    "Sexo de la victima",
+    "Grupo de edad de la victima",
+    "Zona del Hecho",
+    "Escenario del Hecho",
+    "Mes del hecho",
+    "Dia del hecho",
+    "Rango de Hora del Hecho X 3 Horas",
+    "Departamento del hecho DANE",
+    "Mecanismo Causal",
+    "Diagnostico Topográfico de la Lesión",
+    "Presunto Agresor",
+    "Pertenencia Grupal",
+    "Escolaridad",
+    "Ancestro Racial"
+  ],
+  "available_features": [
+    "Sexo de la victima",
+    "Grupo de edad de la victima",
+    "Zona del Hecho",
+    "Escenario del Hecho",
+    "Mes del hecho",
+    "Dia del hecho",
+    "Rango de Hora del Hecho X 3 Horas",
+    "Departamento del hecho DANE",
+    "Mecanismo Causal",
+    "Diagnostico Topográfico de la Lesión",
+    "Presunto Agresor",
+    "Pertenencia Grupal",
+    "Escolaridad",
+    "Ancestro Racial"
+  ],
+  "final_shape": [
+    39844,
+    14
+  ],
+  "class_distribution": {
+    "Crimen organizado / sicariato": 0.517,
+    "Violencia interpersonal": 0.224,
+    "Otros": 0.157,
+    "Conflicto armado / terrorismo": 0.081,
+    "Violencia contra población vulnerable": 0.014,
+    "Violencia institucional / Estado": 0.007,
+    "Violencia estructural o sociopolítica": 0.001
+  },
+  "missing_handling": "categorical: Sin información, numerical: median"
+}

@@ -1,0 +1,116 @@
+feature,importance
+Mecanismo Causal_Corto punzante,0.16145934086039168
+Mecanismo Causal_Proyectil de arma de fuego,0.15256063914748366
+Presunto Agresor_ELN,0.0661410569036024
+Presunto Agresor_Fuerzas militares,0.06278121487517357
+Presunto Agresor_Otros,0.0562290212135355
+Presunto Agresor_Sin información,0.02658697743171744
+Presunto Agresor_Fuerzas irregulares,0.023097581199308267
+Departamento del hecho DANE_Atlántico,0.022963297443084337
+Presunto Agresor_Compañero (a) permanente,0.021896471782340773
+Presunto Agresor_Conocido sin ningun trato,0.021105568923668744
+Sexo de la victima_Mujer,0.01908983089203827
+Departamento del hecho DANE_Valle del Cauca,0.016725305549183278
+Zona del Hecho_Parte rural (vereda y campo),0.014636256480192232
+Presunto Agresor_Policía,0.013934419222929493
+Presunto Agresor_Delincuencia común,0.013926695231876602
+Grupo de edad de la victima_Otros,0.012931653109645235
+Escolaridad_Educación media o secundaria alta,0.010519273672755916
+"Departamento del hecho DANE_Bogotá, D.C.",0.009649950103990352
+"Escenario del Hecho_espacios terrestres al aire libre (bosque, potrero, montaña, playa, etc.)",0.00962484631047659
+Departamento del hecho DANE_Nariño,0.00942210238556788
+Presunto Agresor_Amigo (a),0.008942336405275163
+Departamento del hecho DANE_Norte de Santander,0.008846522435809155
+Departamento del hecho DANE_Otros,0.008230378772280295
+Diagnostico Topográfico de la Lesión_Politraumatismo,0.008002321528506898
+Escolaridad_Educación básica secundaria o secundaria baja,0.007874221692635198
+Rango de Hora del Hecho X 3 Horas_Sin información,0.00632407817483775
+Escenario del Hecho_vía pública,0.006146117522087215
+Escenario del Hecho_vivienda,0.006069949380594051
+Pertenencia Grupal_Presunto colaborador de grupo ilegal,0.005678150901685981
+Escenario del Hecho_lugares de esparcimiento con expendio de alcohol,0.004944507187694349
+Pertenencia Grupal_Otro,0.004932854534340689
+Rango de Hora del Hecho X 3 Horas_21:00 a 23:59,0.004613408170249529
+Diagnostico Topográfico de la Lesión_Trauma de Tórax,0.004220059874690731
+Mecanismo Causal_Generadores de asfixia,0.004201044384963519
+Departamento del hecho DANE_Cauca,0.004046470477307181
+Departamento del hecho DANE_Bolívar,0.0037887964119780347
+Departamento del hecho DANE_Santander,0.00371838477526113
+Diagnostico Topográfico de la Lesión_Trauma craneano,0.003672345112283587
+Pertenencia Grupal_Ninguno,0.0036170187953112327
+Mes del hecho_Otros,0.003526893399762968
+Mecanismo Causal_Corto contundente,0.0035030931102833468
+Escolaridad_Educación inicial y educación preescolar,0.003422098550082978
+Mecanismo Causal_Contundente,0.003303952294987016
+Ancestro Racial_Mestizo,0.003289652280478152
+Escolaridad_Sin información,0.003148638948260034
+Dia del hecho_Lunes,0.0031310895866339936
+Rango de Hora del Hecho X 3 Horas_18:00 a 20:59,0.003128987332217619
+"Escenario del Hecho_calle (autopista, avenida, dentro de la ciudad)",0.003086623517649655
+Dia del hecho_Jueves,0.003075532184963605
+Escenario del Hecho_otros,0.0030618171125872283
+Dia del hecho_Viernes,0.0029297608850617
+"Zona del Hecho_Centro poblado(corregimiento, inspección de policía y caserío)",0.0029238369628891733
+Dia del hecho_Sábado,0.0028229812483179084
+Dia del hecho_Miércoles,0.0028189909259753315
+Dia del hecho_Martes,0.0027642381847509155
+Grupo de edad de la victima_(25 a 29),0.0027608550823130062
+Grupo de edad de la victima_(30 a 34),0.002732618449418586
+Pertenencia Grupal_Otros,0.0027260333927989194
+Mes del hecho_Marzo,0.002717987623241402
+Rango de Hora del Hecho X 3 Horas_12:00 a 14:59,0.0026981780743963726
+Mes del hecho_Septiembre,0.002618769869446318
+Mes del hecho_Enero,0.0026150624923018634
+Rango de Hora del Hecho X 3 Horas_03:00 a 05:59,0.002612687535075931
+Grupo de edad de la victima_(55 a 59),0.002604531999544193
+Mes del hecho_Octubre,0.002602618773634142
+Ancestro Racial_Negro,0.0025955022952230617
+Mes del hecho_Diciembre,0.002495954137353794
+Mes del hecho_Julio,0.002422144201906888
+Mes del hecho_Noviembre,0.002390946977204878
+Mes del hecho_Mayo,0.002339546273653821
+Rango de Hora del Hecho X 3 Horas_09:00 a 11:59,0.002300631091366656
+Diagnostico Topográfico de la Lesión_Por determinar,0.0022632411909253663
+Escenario del Hecho_sin información,0.0022259772547675465
+Grupo de edad de la victima_(35 a 39),0.002202901522658559
+Diagnostico Topográfico de la Lesión_Trauma de abdomen,0.0021857382439535874
+Grupo de edad de la victima_(20 a 24),0.0021565239639935534
+Departamento del hecho DANE_Cesar,0.0020962316255090634
+Pertenencia Grupal_Persona adicta a una droga natural o sintética,0.0020815824626114207
+Grupo de edad de la victima_(18 a 19),0.0020191180137255965
+Ancestro Racial_Sin información,0.0019507346496313977
+Grupo de edad de la victima_(50 a 54),0.0019395813750870809
+Grupo de edad de la victima_(45 a 49),0.0019350991525033882
+Grupo de edad de la victima_(40 a 44),0.0019162320212871165
+Escolaridad_Educación técnica profesional y tecnológica,0.0018988360726110258
+Mes del hecho_Junio,0.0018887597382636167
+Escenario del Hecho_carretera (fuera de la ciudad),0.0018566142487812013
+Ancestro Racial_Mulato,0.0017909195122845878
+Diagnostico Topográfico de la Lesión_Trauma de cuello,0.0017483065741344822
+Rango de Hora del Hecho X 3 Horas_15:00 a 17:59,0.001517861355000059
+Escenario del Hecho_zonas de actividades agropecuarias,0.0014763328906894535
+Pertenencia Grupal_Grupos étnicos,0.0014474918736004986
+"Escenario del Hecho_establecimiento comercial (tienda, centro comercial, almacén, plaza de mercado)",0.0014087215392372286
+Rango de Hora del Hecho X 3 Horas_06:00 a 08:59,0.0013911869752763662
+Ancestro Racial_Blanco,0.0013884673734048578
+Ancestro Racial_Indigena,0.001384532610323081
+Pertenencia Grupal_Ex convictos (as),0.0011024502988088236
+Escolaridad_Sin escolaridad,0.001096136831843394
+Diagnostico Topográfico de la Lesión_Trauma de miembros,0.0010723943356206282
+Mecanismo Causal_Mecanismo o agente explosivo,0.0008966492678176172
+Pertenencia Grupal_Persona en situación de calle,0.0008470418307124674
+Pertenencia Grupal_Persona en condición de desplazamiento,0.0008059884985243791
+Mecanismo Causal_Punzante,0.0007361767071817399
+Diagnostico Topográfico de la Lesión_Trauma área Pélvica,0.0006585958886119302
+Diagnostico Topográfico de la Lesión_Trauma facial,0.0006478771854939617
+Escolaridad_Universitario,0.0006297979083317109
+Zona del Hecho_Sin información,0.0005918259896688751
+Mecanismo Causal_Cortante,0.0005311197098518068
+Mecanismo Causal_Por determinar,0.00041666282638132236
+Diagnostico Topográfico de la Lesión_Sin lesiones,0.0003833437295732636
+Mecanismo Causal_Otros,0.000366370624171896
+Pertenencia Grupal_Sector social LGBTI (OSIGD),0.0003627270875842682
+Escolaridad_Otros,0.0001489207528560996
+"Escolaridad_Especialización, maestría o equivalente",8.764974230785448e-05
+Sexo de la victima_Indeterminado,7.88100505515981e-05
+"Escolaridad_Especialización, Maestría o equivalente",4.574442331088812e-05

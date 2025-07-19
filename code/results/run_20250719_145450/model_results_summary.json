@@ -1,0 +1,65 @@
+{
+  "Random Forest": {
+    "cv_mean": 0.6477897638180989,
+    "cv_std": 0.006496059889605277,
+    "train_accuracy": 0.660643137254902,
+    "test_accuracy": 0.6396034634207555,
+    "train_f1": 0.6693640234885452,
+    "test_f1": 0.6504006008742713,
+    "model_type": "traditional"
+  },
+  "Gradient Boosting": {
+    "cv_mean": 0.717102875283236,
+    "cv_std": 0.0023520697248482305,
+    "train_accuracy": 0.808878431372549,
+    "test_accuracy": 0.7276948174174928,
+    "train_f1": 0.7968638397536808,
+    "test_f1": 0.7091760805800038,
+    "model_type": "traditional"
+  },
+  "Logistic Regression": {
+    "cv_mean": 0.6489705887801067,
+    "cv_std": 0.004593847688494365,
+    "train_accuracy": 0.6286117647058823,
+    "test_accuracy": 0.6209060107918183,
+    "train_f1": 0.6535963832340684,
+    "test_f1": 0.6453786081916643,
+    "model_type": "traditional"
+  },
+  "Naive Bayes": {
+    "cv_mean": 0.6687237479059085,
+    "cv_std": 0.0012320955864033628,
+    "train_accuracy": 0.6956549019607843,
+    "test_accuracy": 0.6939390136780023,
+    "train_f1": 0.6714295506123406,
+    "test_f1": 0.6675364557630457,
+    "model_type": "traditional"
+  },
+  "Neural Network Simple": {
+    "cv_mean": 0.7074360439428306,
+    "cv_std": 0.007804329025930012,
+    "train_accuracy": 0.7576156862745098,
+    "test_accuracy": 0.721169531936253,
+    "train_f1": 0.7384504055115376,
+    "test_f1": 0.6985477533715547,
+    "model_type": "neural_network"
+  },
+  "Neural Network Deep": {
+    "cv_mean": 0.7047646689949959,
+    "cv_std": 0.006912716468637693,
+    "train_accuracy": 0.7590274509803921,
+    "test_accuracy": 0.7207930731584892,
+    "train_f1": 0.7374477681577059,
+    "test_f1": 0.6949461250442769,
+    "model_type": "neural_network"
+  },
+  "Neural Network Complex": {
+    "cv_mean": 0.7013532539344556,
+    "cv_std": 0.012531609855187266,
+    "train_accuracy": 0.7818352941176471,
+    "test_accuracy": 0.7176559166771238,
+    "train_f1": 0.7649140104723505,
+    "test_f1": 0.6942765694464077,
+    "model_type": "neural_network"
+  }
+}

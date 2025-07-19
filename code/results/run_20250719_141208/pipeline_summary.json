@@ -1,0 +1,51 @@
+{
+  "timestamp": "20250719_141208",
+  "run_directory": "../results\\run_20250719_141208",
+  "data_path": "../data/processed/homicidios_procesado.csv",
+  "best_model": "Gradient Boosting",
+  "dataset_shape": [
+    111029,
+    25
+  ],
+  "feature_count": 115,
+  "models_trained": [
+    "Random Forest",
+    "Gradient Boosting",
+    "Logistic Regression",
+    "Naive Bayes"
+  ],
+  "results_summary": {
+    "Random Forest": {
+      "test_accuracy": 0.6396034634207555,
+      "test_f1": 0.6504006008742713,
+      "cv_mean": 0.6477897638180989
+    },
+    "Gradient Boosting": {
+      "test_accuracy": 0.7276948174174928,
+      "test_f1": 0.7091760805800038,
+      "cv_mean": 0.717102875283236
+    },
+    "Logistic Regression": {
+      "test_accuracy": 0.6211569833103275,
+      "test_f1": 0.6457687462750039,
+      "cv_mean": 0.648989672585901
+    },
+    "Naive Bayes": {
+      "test_accuracy": 0.6939390136780023,
+      "test_f1": 0.6675364557630457,
+      "cv_mean": 0.6687237479059085
+    }
+  },
+  "files_generated": [
+    "dataset_info.json",
+    "feature_engineering_info.json",
+    "encoding_info.json",
+    "data_split_info.json",
+    "model_configurations.json",
+    "model_results_summary.json",
+    "model_comparison_table.csv",
+    "model_comparison.png",
+    "classification_report_gradient_boosting.txt",
+    "confusion_matrix_gradient_boosting.png"
+  ]
+}

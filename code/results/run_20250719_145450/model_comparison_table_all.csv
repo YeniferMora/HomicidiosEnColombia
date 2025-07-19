@@ -1,0 +1,8 @@
+Modelo,Tipo,CV F1-Score,Test Accuracy,Test F1-Score
+Random Forest,traditional,0.648,0.640,0.650
+Gradient Boosting,traditional,0.717,0.728,0.709
+Logistic Regression,traditional,0.649,0.621,0.645
+Naive Bayes,traditional,0.669,0.694,0.668
+Neural Network Simple,neural_network,0.707,0.721,0.699
+Neural Network Deep,neural_network,0.705,0.721,0.695
+Neural Network Complex,neural_network,0.701,0.718,0.694

@@ -1,0 +1,58 @@
+{
+  "timestamp": "20250719_145450",
+  "run_directory": "../results\\run_20250719_145450",
+  "data_path": "../data/processed/homicidios_procesado.csv",
+  "best_model": "Gradient Boosting",
+  "dataset_shape": [
+    111029,
+    25
+  ],
+  "feature_count": 115,
+  "n_classes": 7,
+  "models_trained": [
+    "Random Forest",
+    "Gradient Boosting",
+    "Logistic Regression",
+    "Naive Bayes",
+    "Neural Network Simple",
+    "Neural Network Deep",
+    "Neural Network Complex"
+  ],
+  "results_summary": {
+    "Random Forest": {
+      "test_accuracy": 0.6396034634207555,
+      "test_f1": 0.6504006008742713,
+      "model_type": "traditional"
+    },
+    "Gradient Boosting": {
+      "test_accuracy": 0.7276948174174928,
+      "test_f1": 0.7091760805800038,
+      "model_type": "traditional"
+    },
+    "Logistic Regression": {
+      "test_accuracy": 0.6209060107918183,
+      "test_f1": 0.6453786081916643,
+      "model_type": "traditional"
+    },
+    "Naive Bayes": {
+      "test_accuracy": 0.6939390136780023,
+      "test_f1": 0.6675364557630457,
+      "model_type": "traditional"
+    },
+    "Neural Network Simple": {
+      "test_accuracy": 0.721169531936253,
+      "test_f1": 0.6985477533715547,
+      "model_type": "neural_network"
+    },
+    "Neural Network Deep": {
+      "test_accuracy": 0.7207930731584892,
+      "test_f1": 0.6949461250442769,
+      "model_type": "neural_network"
+    },
+    "Neural Network Complex": {
+      "test_accuracy": 0.7176559166771238,
+      "test_f1": 0.6942765694464077,
+      "model_type": "neural_network"
+    }
+  }
+}

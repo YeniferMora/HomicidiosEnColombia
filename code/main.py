@@ -5,7 +5,9 @@ from src.association_rules import create_association_rules
 from src.config import PROCESSED_DATA_PATH
 from src.grouping_k import ClusteringHomicidios
 from src.nationalGrouping import NationalGrouping
+from src.classification_pipeline import HomicideClassificationPipeline
 
+"""
 def main():
     print("Cargando datos...")
     df = load_raw_data()
@@ -41,5 +43,15 @@ def main():
     print("\nAgrupación K completada exitosamente!")
     print(resultados)
 
+"""
+
+def main():
+    # Ejecutar el pipeline completo
+
+    classifier = HomicideClassificationPipeline('../data/processed/homicidios_procesado.csv')
+    results = classifier.run_complete_pipeline()
+    print("\nPipeline de clasificación de homicidios completado exitosamente!")
+    print(results)
+    
 if __name__ == "__main__":
     main()

@@ -1,0 +1,4 @@
+Red Neuronal,Test Accuracy,Test F1-Score,Iteraciones,Loss Final,Arquitectura
+Neural Network Simple,0.721,0.699,18,0.5675,"(100,)"
+Neural Network Deep,0.721,0.695,22,0.4930,"(100, 50)"
+Neural Network Complex,0.718,0.694,27,0.2210,"(150, 100, 50)"

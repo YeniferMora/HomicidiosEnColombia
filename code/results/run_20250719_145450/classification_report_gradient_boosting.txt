@@ -1,0 +1,13 @@
+                                       precision    recall  f1-score   support
+
+        Conflicto armado / terrorismo       0.78      0.67      0.72       644
+        Crimen organizado / sicariato       0.76      0.87      0.81      4123
+                                Otros       0.54      0.26      0.35      1250
+Violencia contra población vulnerable       0.68      0.70      0.69       109
+Violencia estructural o sociopolítica       0.11      0.20      0.14         5
+     Violencia institucional / Estado       0.35      0.37      0.36        54
+              Violencia interpersonal       0.72      0.76      0.74      1784
+
+                             accuracy                           0.73      7969
+                            macro avg       0.56      0.55      0.54      7969
+                         weighted avg       0.71      0.73      0.71      7969
