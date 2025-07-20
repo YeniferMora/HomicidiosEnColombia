@@ -272,7 +272,14 @@ La generación de reglas se fundamentó en tres métricas clave para evaluar su 
     \item \textbf{Elevación (\textit{Lift}):} Mide cuánto más probable es que ocurra el consecuente \{B\} cuando el antecedente \{A\} está presente, en comparación con la probabilidad de que \{B\} ocurra por sí solo. Un valor de \textit{lift} \textgreater{} 1 indica una asociación positiva y, por tanto, una regla potencialmente interesante.
 \end{itemize}
 
-Para definir los parámetros de los algoritmos, se utilizó el método del codo (\textit{Elbow Method}), graficando el número de conjuntos de ítems frecuentes encontrados para distintos umbrales de soporte. Aunque no se observó un ``codo'' pronunciado, se seleccionó un \textbf{soporte mínimo de 0.05}, ya que ofrecía un equilibrio entre obtener un número manejable de reglas significativas y no descartar patrones relevantes.
+Para definir los parámetros de los algoritmos, se utilizó el método del codo (ver figura 1), graficando el número de conjuntos de ítems frecuentes encontrados para distintos umbrales de soporte. Aunque no se observó un ``codo'' pronunciado, se seleccionó un \textbf{soporte mínimo de 0.05}, ya que ofrecía un equilibrio entre obtener un número manejable de reglas significativas y no descartar patrones relevantes.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{Imagen1.jpeg}
+  \caption{M\'etodo de codo para encontrar el min\_support \'optimo.}
+ \label{fig:codo_support}
+\end{figure}
 
 Con este soporte, se aplicaron tanto \texttt{Apriori} como \texttt{FP-Growth}, obteniendo en ambos casos 649 conjuntos de ítems frecuentes. A partir de estos, se generaron reglas de asociación que fueron filtradas para conservar únicamente aquellas con un \textbf{lift \textgreater{} 1.2} y una \textbf{confianza \textgreater{} 0.6}, resultando en un conjunto final de 97 reglas significativas. La validación cruzada entre ambos algoritmos confirmó que el conjunto de reglas generado fue idéntico, asegurando la robustez del resultado.
 
@@ -486,24 +493,20 @@ Basándose en los perfiles identificados mediante técnicas de clustering y los 
 \label{sec:clasificacion}
 
 \subsection{Metodología de Clasificación}
-Para abordar el problema de clasificación de las circunstancias de homicidios en Colombia, se implementó un \textit{pipeline} completo de aprendizaje automático que incluye tanto modelos tradicionales como redes neuronales. El objetivo principal fue desarrollar un sistema capaz de predecir las circunstancias del hecho basándose en las características disponibles de cada caso.
+Con base en los perfiles identificados mediante agrupamiento y los patrones revelados a través del análisis de reglas de asociación, se reconoció la relevancia de la variable \textit{circunstancia del hecho} como un factor clave en la caracterización de los homicidios. Por ello, se desarrolló un sistema de clasificación supervisada enfocado en predecir dicha variable a partir de las características disponibles en cada registro.
 
 \subsubsection{Preparación de Datos}
-La preparación de datos se basó en los hallazgos del análisis exploratorio previo (Sección \ref{sec:clustering}). Se seleccionaron las variables más relevantes identificadas en la fase de exploración:
-
+La selección de variables se basó en los hallazgos del análisis exploratorio (Sección \ref{sec:clustering}). Se incluyeron:
 \begin{itemize}
-\item \textbf{Víctima:} Sexo, grupo de edad, escolaridad, ancestro racial
-\item \textbf{Hecho:} Zona, escenario, departamento, mecanismo causal, diagnóstico topográfico
-\item \textbf{Agresor:} Presunto agresor, pertenencia grupal
+\item \textbf{Víctima:} Sexo, grupo de edad, escolaridad, ancestro racial.
+\item \textbf{Hecho:} Zona, escenario, departamento, mecanismo causal, diagnóstico topográfico.
+\item \textbf{Agresor:} Presunto agresor, pertenencia grupal.
 \end{itemize}
 
-Se implementó una estrategia de limpieza que eliminó los casos clasificados como ``Sin información'' en la variable objetivo, resultando en un dataset final con observaciones válidas. 
-La codificación de variables categóricas se realizó mediante \textit{One-Hot Encoding}, implementando una estrategia de reducción dimensional.
+Se eliminaron registros con la categoría "Sin información" en la variable objetivo, obteniendo un conjunto depurado. Las variables categóricas fueron codificadas mediante \textit{One-Hot Encoding}, aplicando una estrategia de reducción de dimensionalidad para evitar la sobrecarga de atributos.
 
 \subsubsection{Modelos Implementados}
-Se evaluaron seis modelos de clasificación divididos en dos categorías principales. Los modelos tradicionales incluyeron Random Forest con balanceamiento de clases, Gradient Boosting y Naive Bayes Multinomial. Las redes neuronales comprendieron tres arquitecturas: Simple (una capa oculta de 100 neuronas), Profunda (dos capas de 100 y 50 neuronas) y Compleja (tres capas de 150, 100 y 50 neuronas), todas con activación ReLU, optimizador Adam y parada temprana.
-Los datos se dividieron estratificadamente en conjuntos de entrenamiento (31,875 observaciones) y prueba (7,969 observaciones). Para las redes neuronales se aplicó estandarización mediante StandardScaler. La evaluación se realizó usando validación cruzada estratificada de 5 pliegues con F1-Score ponderado como métrica principal para manejar el desbalance de clases.
-
+Se evaluaron seis modelos: tres tradicionales (Random Forest con balanceo, Gradient Boosting, Naive Bayes Multinomial) y tres redes neuronales (simple, profunda y compleja), todas con activación ReLU, optimizador Adam y \textit{early stopping}. Se dividió el conjunto en entrenamiento (31.875 observaciones) y prueba (7.969 observaciones), aplicando estandarización a los datos para las redes neuronales. La validación se realizó con 5 pliegues estratificados, usando F1-Score ponderado como métrica principal.
 
 
 \subsubsection{Estrategia de Evaluación}
@@ -526,7 +529,7 @@ La evaluación se realizó mediante:
 \label{tab:comparacion_modelos}
 \begin{tabular}{lccccc}
 \toprule
-\textbf{Modelo}  & \textbf{CV F1-Score} & \textbf{Test Accuracy} & \textbf{Test F1-Score} \\
+\textbf{Modelo}  & \textbf{CV F1-Score} & \textbf{Accuracy} & \textbf{F1-Score} \\
 \midrule
 Random Forest  & 0.652 & 0.623 & 0.640 \\
 Gradient Boosting  & 0.738 & 0.742 & 0.730 \\
@@ -538,30 +541,42 @@ Neural Network Complex & 0.729 & 0.740 & 0.724 \\
 \end{tabular}
 \end{table}
 
-Los resultados demuestran que Gradient Boosting emergió como el modelo con mejor rendimiento general, alcanzando un F1-Score de validación cruzada de 0.717 (±0.005) y un F1-Score de prueba de 0.709, con una precisión de 72.8\%. Este modelo superó consistentemente a todas las demás alternativas evaluadas, mostrando robustez ante el desbalance de clases y capacidad de capturar patrones complejos en los datos.
-Las redes neuronales mostraron un rendimiento competitivo pero inferior a Gradient Boosting. La red neuronal simple alcanzó el mejor desempeño entre las arquitecturas neuronales con F1-Score de validación cruzada de 0.707 (±0.016) y F1-Score de prueba de 0.699, convergiendo en apenas 18 iteraciones con un loss final de 0.5675. Paradójicamente, las arquitecturas más complejas (profunda y compleja) no mejoraron el rendimiento, sugiriendo que la complejidad adicional no aporta valor discriminativo para este problema específico.
-Los modelos tradicionales restantes mostraron rendimientos variados: Naive Bayes alcanzó un F1-Score de prueba de 0.668 y Random Forest obtuvo 0.650.
+\begin{figure*}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{Imagen2.png}
+  \caption{Comparación de rendimiento de modelos de clasificación}
+  \label{fig:mapa-homicidios}
+\end{figure*}
+
+Gradient Boosting fue el modelo con mejor rendimiento, con un F1-Score de validación cruzada de 0.738 y F1-Score de prueba de 0.730. Superó consistentemente al resto, demostrando robustez frente al desbalance de clases y buena capacidad para modelar patrones complejos.
+
+Las redes neuronales mostraron rendimientos competitivos, siendo la arquitectura simple la mejor entre ellas. Las versiones profunda y compleja no ofrecieron mejoras significativas, lo que sugiere que la complejidad adicional no aporta valor en este contexto.
+
+Naive Bayes y Random Forest presentaron desempeños más bajos, aunque sus resultados siguen siendo razonables como línea base.
+
+
 \subsubsection{Importancia de Características}
-Al realizar el análisis de importancia de características del modelo Gradient Boosting se presentaron como variables más discriminativas son el mecanismo causal, específicamente "Corto punzante" (16.1\% de importancia) y "Proyectil de arma de fuego" (15.3\%). El presunto agresor también mostró alta relevancia, particularmente las categorías ELN (6.6\%), Fuerzas militares (6.3\%) y Otros (5.6\%), evidenciando la importancia del contexto del conflicto armado en la clasificación.
-Variables geográficas como el departamento del Atlántico (2.3\% de importancia) y características relacionales como "Compañero permanente" (2.2\%) y "Conocido sin ningún trato" (2.1\%) también contribuyen significativamente a la discriminación entre circunstancias. Estos hallazgos confirman la relevancia forense de elementos tradicionalmente considerados en la investigación criminal y validan el enfoque metodológico adoptado.
+El análisis del modelo Gradient Boosting destacó las siguientes variables como las más relevantes:
+\begin{itemize}
+\item Mecanismo causal: ``Corto punzante'' (16.1\%) y ``Proyectil de arma de fuego'' (15.3\%).
+\item Presunto agresor: ELN (6.6\%), Fuerzas Militares (6.3\%), Otros (5.6\%).
+\item Departamento del Atlántico (2.3\%).
+\item Relación con la víctima: ``Compañero permanente'' (2.2\%), ``Conocido sin ningún trato'' (2.1\%).
+\end{itemize}
+Estos hallazgos refuerzan la importancia forense de ciertas variables contextuales en la predicción de las circunstancias de un homicidio.
 
 \subsection{Búsqueda de Hiperparámetros}
-Se implementó búsqueda en grilla para optimizar los hiperparámetros de Gradient Boosting, explorando 27 combinaciones de parámetros clave. La configuración óptima incluyó learning rate de 0.1, profundidad máxima de 6 y 150 estimadores, resultando en una mejora marginal del F1-Score de validación cruzada a 0.714 y del F1-Score de prueba a 0.711. Aunque las mejoras fueron modestas, confirman la robustez de la configuración inicial y la estabilidad del modelo.
-
-
+Se realizó una búsqueda en grilla para ajustar los hiperparámetros de Gradient Boosting, evaluando 27 combinaciones. La configuración óptima (\textit{learning rate} = 0.1, profundidad = 6, estimadores = 150) mejoró marginalmente los resultados (F1 de prueba: 0.732), lo que valida la estabilidad del modelo inicial.
 
 \subsection{Discusión}
-
-Los resultados demuestran la viabilidad de usar aprendizaje automático para clasificar circunstancias de homicidios, aunque con limitaciones:
-
+Los resultados confirman la viabilidad del aprendizaje automático para clasificar las circunstancias de homicidios en Colombia. Sin embargo, se identifican limitaciones importantes:
 \begin{itemize}
-\item El desbalance de clases afecta el rendimiento en categorías minoritarias.
-\item La calidad variable de los datos originales impacta los resultados.
-\item Algunas circunstancias son intrínsecamente difíciles de distinguir.
+\item Desbalance de clases que afecta la precisión en categorías minoritarias.
+\item Calidad desigual de los datos originales.
+\item Ambigüedad inherente en algunas circunstancias.
 \end{itemize}
 
-El sistema desarrollado podría automatizar el procesamiento inicial de casos forenses, aunque se recomienda su uso como herramienta de apoyo más que como sistema autónomo.
-
+El sistema propuesto podría apoyar el análisis forense preliminar, aunque se recomienda su uso como complemento a la investigación humana, no como herramienta autónoma.
 \section{Conclusión}
 
 Este trabajo presenta un enfoque integral de minería de datos para la caracterización y clasificación de homicidios en Colombia durante el período 2015-2023. La metodología desarrollada abarca desde el análisis exploratorio inicial hasta la implementación de modelos predictivos, demostrando la viabilidad de aplicar técnicas avanzadas de ciencia de datos a problemas criminológicos complejos.
