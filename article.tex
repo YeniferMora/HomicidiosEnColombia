@@ -24,11 +24,11 @@
   \and
   A.D. Ramírez Chiquillo, 
   \and
-  J.D. Ramírez Castañeda 
+  J.D. Ramirez Castañeda 
 }
 \maketitle
 \begin{abstract}
-This article presents a comprehensive data mining approach for characterizing and classifying homicides in Colombia (2015-2023). Using a dataset of 111,263 records from Colombia's Open Data portal, we conducted exploratory data analysis, data preprocessing, association rule mining, clustering analysis, and supervised classification. The methodology includes handling missing values, categorical variable standardization, and feature selection based on entropy and statistical association metrics. Association rule mining with Apriori and FP-Growth algorithms revealed specific risk profiles, including gender-based violence patterns. Clustering analysis using DBSCAN, GMM, and K-modes identified latent homogeneous profiles at both national and local (Bogotá) levels. Finally, supervised classification using Gradient Boosting achieved an F1-Score of 0.709 for predicting homicide circumstances. Results provide evidence-based insights for differentiated public policy design and violence prevention strategies.
+This article presents a comprehensive data mining approach for characterizing and classifying homicides in Colombia (2015-2023). Using a dataset of 111,263 records from Colombia's Open Data portal, we conducted exploratory data analysis, data preprocessing, association rule mining, clustering analysis, and supervised classification. The methodology includes handling missing values, categorical variable standardization, and feature selection based on entropy and statistical association metrics. Association rule mining with Apriori and FP-Growth algorithms revealed specific risk profiles, including gender-based violence patterns. Clustering analysis using DBSCAN, GMM, and K-modes identified latent homogeneous profiles at both national and local (Bogotá) levels. Finally, supervised classification using different methods like Gradient boosting, Random forest, neuronal networks, among others, achieved great results for predicting homicide circumstances. Results provide evidence-based insights for differentiated public policy design and violence prevention strategies.
 \end{abstract}
 
 
@@ -37,10 +37,10 @@ Exploratory data analysis, homicides, Colombia, preprocessing, classification, a
 \end{IEEEkeywords}
 
 \section{Introducción}
-\IEEEPARstart{E}{l} análisis de datos de eventos violentos como los homicidios es fundamental para obtener una comprensión
- profunda de sus raíces, los entornos en los que ocurren y para la formulación de estrategias de prevención que sean efectivas.
- No obstante, antes de la implementación de modelos predictivos sofisticados o la extracción de conclusiones significativas,
- se requiere un análisis exploratorio exhaustivo y una preparación meticulosa de los datos existentes. Este artículo describe las etapas iniciales de este procedimiento, utilizando un conjunto de datos específico de homicidios en Colombia, y presenta la aplicación de técnicas avanzadas de minería de datos incluyendo análisis de reglas de asociación, agrupación (clustering) y clasificación supervisada para identificar patrones latentes y desarrollar modelos predictivos de las circunstancias de los homicidios.
+\IEEEPARstart{E}{l} análisis de datos de eventos violentos como los homicidios es fundamental para obtener una comprensión profunda de sus raíces, los entornos en los que ocurren y para la formulación de estrategias de prevención efectivas. Más allá de un análisis exploratorio inicial, la minería de datos permite descubrir patrones complejos, identificar perfiles de riesgo y construir modelos predictivos que pueden apoyar la toma de decisiones informadas en política pública.
+
+Este artículo aplica un enfoque integral de minería de datos al conjunto de homicidios registrados en Colombia entre 2015 y 2023. A partir de un proceso riguroso de preprocesamiento y análisis exploratorio, se implementaron técnicas como reglas de asociación, algoritmos de agrupamiento y modelos de clasificación supervisada. Estas metodologías permitieron no solo caracterizar los homicidios, sino también detectar perfiles latentes y predecir las circunstancias asociadas a los casos. Los resultados obtenidos brindan insumos relevantes para el diseño de intervenciones diferenciadas y estrategias de prevención de la violencia.
+
 %---------------------------------------------------------------------------------
 % Secciones del Documento
 %---------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ Para preparar los datos para su uso en modelos estadísticos o de aprendizaje au
 \end{itemize}
 \section{Selección de Características}
 
-Durante esta fase se realizó un análisis exploratorio detallado con el objetivo de identificar las variables categóricas más relevantes para el análisis posterior. Se utilizaron técnicas estadísticas y métricas de información que permiten evaluar tanto la variabilidad interna de las variables como las relaciones entre ellas. Las principales técnicas empleadas fueron el análisis de entropía, la prueba de Chi-cuadrado y el coeficiente V de Cramer, seleccionadas por su capacidad para evaluar variables categóricas de forma objetiva y cuantificable \cite{tan2018introduction}.
+Durante esta fase se realizó un análisis exploratorio detallado con el objetivo de identificar las variables categóricas más relevantes para el análisis posterior. Se utilizaron técnicas estadísticas y métricas de información que permiten evaluar tanto la variabilidad interna de los atributos como las relaciones entre ellas. Las principales técnicas empleadas fueron el análisis de entropía, la prueba de Chi-cuadrado y el coeficiente V de Cramer, seleccionadas por su capacidad para evaluar variables categóricas de forma objetiva y cuantificable \cite{tan2018introduction}.
 
 \subsection{Distribuciones y Entropía}
 
@@ -226,13 +226,9 @@ V = \sqrt{\frac{\chi^2}{n(k - 1)}}
 
 donde $n$ es el tamaño de la muestra y $k$ es el menor número de categorías entre las dos variables. Un valor cercano a 0 indica independencia, mientras que valores más cercanos a 1 indican una asociación fuerte \cite{backhaus2016multivariate}.
 
-El análisis reveló asociaciones significativas, entre ellas:
-
-\begin{itemize}
-    \item Municipio del hecho DANE y Departamento del hecho DANE: V de Cramer = 0.990 (alta redundancia)
-    \item Circunstancia del hecho con:
+El análisis reveló asociaciones significativas, especialmente circunstancia del hecho con
          ``Municipio del hecho'' (0.304)
-\end{itemize}
+
 
 Estas relaciones sugieren que ciertas variables capturan contextos comunes o dependencias importantes entre dimensiones del evento, lo que puede ser aprovechado en tareas de modelado.
 
@@ -251,11 +247,10 @@ Las variables prioritarias identificadas incluyen:
 
 Su combinación facilita una selección de características objetiva, interpretable y basada en evidencia, lo cual es crucial para el éxito de modelos predictivos y para generar análisis descriptivos robustos.
 
-Con los datos adecuadamente preprocesados y las características seleccionadas, se procedió a aplicar técnicas de minería de patrones para descubrir asociaciones no evidentes entre las variables, utilizando algoritmos de reglas de asociación.
 
 \section*{VI. ANÁLISIS DE REGLAS DE ASOCIACIÓN}
 
-Para complementar el análisis exploratorio y descubrir patrones de coocurrencia no evidentes entre las características de los homicidios, se aplicaron técnicas de minería de reglas de asociación. El objetivo de este análisis fue identificar qué combinaciones de atributos aparecen juntas con frecuencia en los registros, formulando reglas en el formato \textit{``SI \{A\} ENTONCES \{B\}''}. Se utilizaron los algoritmos \texttt{Apriori} y \texttt{FP-Growth}, implementados a través de la librería \texttt{mlxtend} en Python, para llevar a cabo esta tarea.
+Para complementar el análisis exploratorio y descubrir patrones de coocurrencia no evidentes entre las características de los homicidios, se aplicaron técnicas de minería de reglas de asociación. El objetivo de este análisis fue identificar qué combinaciones de atributos aparecen juntas con frecuencia en los registros, formulando reglas en el formato \textit{``SI \{A\} ENTONCES \{B\}''}. Se utilizaron los algoritmos \texttt{Apriori} y \texttt{FP-Growth}, implementados a través de la librería \texttt{mlxtend}, para llevar a cabo esta tarea.
 
 \subsection*{A. Preparación de Datos para Asociación}
 
@@ -463,7 +458,7 @@ El análisis específico de Bogotá con DBSCAN (coeficiente de silueta promedio 
 \end{itemize}
 
 
-\subsection{Implicaciones y Conclusiones}
+\subsection{Análisis de mplicaciones}
 El análisis de agrupación multinivel reveló una arquitectura compleja en los datos de homicidios colombianos que complementa y enriquece los hallazgos del análisis exploratorio y las reglas de asociación.
 
 \subsubsection{Hallazgos Estructurales}
@@ -482,7 +477,7 @@ El análisis de agrupación multinivel reveló una arquitectura compleja en los 
     \item El enfoque multinivel (nacional-local) demostró ser fundamental para capturar tanto patrones generales como especificidades regionales, proporcionando una base sólida para el diseño de estrategias diferenciadas de prevención y control de la violencia que consideren tanto las tendencias nacionales como las dinámicas locales específicas.
 \end{itemize}
 
-Basándose en los perfiles identificados mediante clustering y los patrones descubiertos con reglas de asociación, se desarrolló un sistema de clasificación supervisada para predecir las circunstancias de los homicidios.
+Basándose en los perfiles identificados mediante técnicas de clustering y los patrones revelados a través del análisis de reglas de asociación, se evidenció la relevancia de la variable circunstancia del hecho como un factor central en la caracterización de los homicidios. A partir de esta observación, se desarrolló un sistema de clasificación supervisada orientado a predecir dicha circunstancia, con el objetivo de aportar herramientas útiles para la prevención y el análisis diferenciado de la violencia.
 %---------------------------------------------------------------------------------
 % Sección 4: Clasificación de Circunstancias de Homicidios
 %---------------------------------------------------------------------------------
@@ -493,7 +488,7 @@ Basándose en los perfiles identificados mediante clustering y los patrones desc
 \subsection{Metodología de Clasificación}
 Para abordar el problema de clasificación de las circunstancias de homicidios en Colombia, se implementó un \textit{pipeline} completo de aprendizaje automático que incluye tanto modelos tradicionales como redes neuronales. El objetivo principal fue desarrollar un sistema capaz de predecir las circunstancias del hecho basándose en las características disponibles de cada caso.
 
-\subsubsection{Preparación de Datos y Ingeniería de Características}
+\subsubsection{Preparación de Datos}
 La preparación de datos se basó en los hallazgos del análisis exploratorio previo (Sección \ref{sec:clustering}). Se seleccionaron las variables más relevantes identificadas en la fase de exploración:
 
 \begin{itemize}
@@ -503,14 +498,13 @@ La preparación de datos se basó en los hallazgos del análisis exploratorio pr
 \end{itemize}
 
 Se implementó una estrategia de limpieza que eliminó los casos clasificados como ``Sin información'' en la variable objetivo, resultando en un dataset final con observaciones válidas. 
-La variable objetivo, ``Circunstancia del hecho'', fue transformada a un formato categórico con 50 categorías originales. Posteriormente, se realizó una agrupación de estas categorías en 7 grupos principales para reducir la complejidad y mejorar la interpretabilidad del modelo.
-La codificación de variables categóricas se realizó mediante \textit{One-Hot Encoding}, implementando una estrategia de reducción dimensional que mantiene únicamente las 10 categorías más frecuentes por variable, agrupando el resto como ``Otros''. Esta aproximación controló la explosión dimensional mientras preservaba la información relevante.
+La codificación de variables categóricas se realizó mediante \textit{One-Hot Encoding}, implementando una estrategia de reducción dimensional.
 
 \subsubsection{Modelos Implementados}
-Se evaluaron siete modelos de clasificación divididos en dos categorías principales. Los modelos tradicionales incluyeron Random Forest con balanceamiento de clases, Gradient Boosting, Regresión Logística con regularización y Naive Bayes Multinomial. Las redes neuronales comprendieron tres arquitecturas: Simple (una capa oculta de 100 neuronas), Profunda (dos capas de 100 y 50 neuronas) y Compleja (tres capas de 150, 100 y 50 neuronas), todas con activación ReLU, optimizador Adam y parada temprana.
+Se evaluaron seis modelos de clasificación divididos en dos categorías principales. Los modelos tradicionales incluyeron Random Forest con balanceamiento de clases, Gradient Boosting y Naive Bayes Multinomial. Las redes neuronales comprendieron tres arquitecturas: Simple (una capa oculta de 100 neuronas), Profunda (dos capas de 100 y 50 neuronas) y Compleja (tres capas de 150, 100 y 50 neuronas), todas con activación ReLU, optimizador Adam y parada temprana.
 Los datos se dividieron estratificadamente en conjuntos de entrenamiento (31,875 observaciones) y prueba (7,969 observaciones). Para las redes neuronales se aplicó estandarización mediante StandardScaler. La evaluación se realizó usando validación cruzada estratificada de 5 pliegues con F1-Score ponderado como métrica principal para manejar el desbalance de clases.
 
-Todas las redes neuronales utilizaron activación ReLU, optimizador Adam, parada temprana y validación cruzada interna. Los datos fueron estandarizados usando \textit{StandardScaler}.
+
 
 \subsubsection{Estrategia de Evaluación}
 La evaluación se realizó mediante:
@@ -519,7 +513,7 @@ La evaluación se realizó mediante:
 \item Validación cruzada estratificada de 5 pliegues
 \item División 80-20 para entrenamiento-prueba
 \item Métricas principales: F1-Score ponderado y accuracy
-\item Manejo del desbalance mediante pesos balanceados
+
 \end{itemize}
 
 \subsection{Resultados de Clasificación}
@@ -528,24 +522,25 @@ La evaluación se realizó mediante:
 
 \begin{table}[htbp]
 \centering
-\caption{Rendimiento comparativo de modelos}
-\label{tab:rendimiento_modelos}
-\begin{tabular}{lcc}
+\caption{Rendimiento comparativo de modelos de clasificación}
+\label{tab:comparacion_modelos}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Modelo} & \textbf{F1-Score (CV)} & \textbf{F1-Score (Prueba)} \\
+\textbf{Modelo}  & \textbf{CV F1-Score} & \textbf{Test Accuracy} & \textbf{Test F1-Score} \\
 \midrule
-Gradient Boosting & 0.717 ($\pm$0.005) & 0.709 \\
-Red Neuronal Simple & 0.707 ($\pm$0.016) & 0.699 \\
-Naive Bayes & 0.668 ($\pm$0.008) & 0.668 \\
-Random Forest & 0.650 ($\pm$0.010) & 0.650 \\
-Regresión Logística & 0.645 ($\pm$0.007) & 0.645 \\
+Random Forest  & 0.652 & 0.623 & 0.640 \\
+Gradient Boosting  & 0.738 & 0.742 & 0.730 \\
+Naive Bayes  & 0.697 & 0.714 & 0.691 \\
+Neural Network Simple & 0.729 & 0.738 & 0.725 \\
+Neural Network Deep & 0.729 & 0.734 & 0.721 \\
+Neural Network Complex & 0.729 & 0.740 & 0.724 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Los resultados demuestran que Gradient Boosting emergió como el modelo con mejor rendimiento general, alcanzando un F1-Score de validación cruzada de 0.717 (±0.005) y un F1-Score de prueba de 0.709, con una precisión de 72.8\%. Este modelo superó consistentemente a todas las demás alternativas evaluadas, mostrando robustez ante el desbalance de clases y capacidad de capturar patrones complejos en los datos.
 Las redes neuronales mostraron un rendimiento competitivo pero inferior a Gradient Boosting. La red neuronal simple alcanzó el mejor desempeño entre las arquitecturas neuronales con F1-Score de validación cruzada de 0.707 (±0.016) y F1-Score de prueba de 0.699, convergiendo en apenas 18 iteraciones con un loss final de 0.5675. Paradójicamente, las arquitecturas más complejas (profunda y compleja) no mejoraron el rendimiento, sugiriendo que la complejidad adicional no aporta valor discriminativo para este problema específico.
-Los modelos tradicionales restantes mostraron rendimientos variados: Naive Bayes alcanzó un F1-Score de prueba de 0.668, Random Forest obtuvo 0.650, y Regresión Logística 0.645, confirmando la superioridad de los métodos ensemble para este tipo de datos categóricos desbalanceados.
+Los modelos tradicionales restantes mostraron rendimientos variados: Naive Bayes alcanzó un F1-Score de prueba de 0.668 y Random Forest obtuvo 0.650.
 \subsubsection{Importancia de Características}
 Al realizar el análisis de importancia de características del modelo Gradient Boosting se presentaron como variables más discriminativas son el mecanismo causal, específicamente "Corto punzante" (16.1\% de importancia) y "Proyectil de arma de fuego" (15.3\%). El presunto agresor también mostró alta relevancia, particularmente las categorías ELN (6.6\%), Fuerzas militares (6.3\%) y Otros (5.6\%), evidenciando la importancia del contexto del conflicto armado en la clasificación.
 Variables geográficas como el departamento del Atlántico (2.3\% de importancia) y características relacionales como "Compañero permanente" (2.2\%) y "Conocido sin ningún trato" (2.1\%) también contribuyen significativamente a la discriminación entre circunstancias. Estos hallazgos confirman la relevancia forense de elementos tradicionalmente considerados en la investigación criminal y validan el enfoque metodológico adoptado.
@@ -553,22 +548,16 @@ Variables geográficas como el departamento del Atlántico (2.3\% de importancia
 \subsection{Búsqueda de Hiperparámetros}
 Se implementó búsqueda en grilla para optimizar los hiperparámetros de Gradient Boosting, explorando 27 combinaciones de parámetros clave. La configuración óptima incluyó learning rate de 0.1, profundidad máxima de 6 y 150 estimadores, resultando en una mejora marginal del F1-Score de validación cruzada a 0.714 y del F1-Score de prueba a 0.711. Aunque las mejoras fueron modestas, confirman la robustez de la configuración inicial y la estabilidad del modelo.
 
-Configuración óptima para Gradient Boosting:
-\begin{itemize}
-\item Learning rate: 0.1
-\item Profundidad máxima: 6
-\item Número de estimadores: 150
-\item Mejora marginal: F1-Score de 0.711 (vs 0.709 inicial)
-\end{itemize}
+
 
 \subsection{Discusión}
 
 Los resultados demuestran la viabilidad de usar aprendizaje automático para clasificar circunstancias de homicidios, aunque con limitaciones:
 
 \begin{itemize}
-\item El desbalance de clases afecta el rendimiento en categorías minoritarias
-\item La calidad variable de los datos originales impacta los resultados
-\item Algunas circunstancias son intrínsecamente difíciles de distinguir
+\item El desbalance de clases afecta el rendimiento en categorías minoritarias.
+\item La calidad variable de los datos originales impacta los resultados.
+\item Algunas circunstancias son intrínsecamente difíciles de distinguir.
 \end{itemize}
 
 El sistema desarrollado podría automatizar el procesamiento inicial de casos forenses, aunque se recomienda su uso como herramienta de apoyo más que como sistema autónomo.
@@ -579,11 +568,11 @@ Este trabajo presenta un enfoque integral de minería de datos para la caracteri
 
 El análisis exploratorio y preprocesamiento fueron fundamentales para transformar un conjunto de datos crudo en una base sólida para análisis posteriores. Se identificaron y abordaron problemas críticos como valores faltantes heterogéneos (64.16\% en "Circunstancia del Hecho"), inconsistencias en codificación, y variables no informativas. Las técnicas de evaluación de relaciones (V de Cramer, Chi-cuadrado, entropía) resultaron cruciales para la selección objetiva de características.
 
-La aplicación de algoritmos de reglas de asociación (Apriori y FP-Growth) reveló patrones específicos de riesgo previamente no evidentes. Se identificaron 97 reglas significativas que caracterizan perfiles diferenciados, incluyendo patrones de violencia urbana con arma blanca (lift: 1.37), asociaciones entre víctimas jóvenes y armas de fuego (lift: 1.30), y perfiles específicos de violencia de género donde el uso de armas de fuego se asocia fuertemente con contextos de vía pública.
+La aplicación de algoritmos de reglas de asociación (Apriori y FP-Growth) reveló patrones específicos de riesgo previamente no evidentes. Se identificaron reglas significativas que caracterizan perfiles diferenciados, incluyendo patrones de violencia urbana con arma blanca (lift: 1.37), asociaciones entre víctimas jóvenes y armas de fuego (lift: 1.30), y perfiles específicos de violencia de género donde el uso de armas de fuego se asocia fuertemente con contextos de vía pública.
 
 El análisis de agrupación multinivel (nacional y local) reveló estructuras latentes complejas. A nivel nacional, DBSCAN identificó cuatro perfiles principales con un coeficiente de silueta de 0.824, incluyendo patrones de violencia interpersonal dominante, perfiles específicos de violencia de género, y casos atípicos relevantes. El análisis específico de Bogotá (coeficiente de silueta: 0.826) descubrió dinámicas urbanas particulares, incluyendo un cluster asociado a terrorismo/conflicto armado.
 
-Finalmente, la implementación de modelos de clasificación supervisada demostró la viabilidad de predecir circunstancias de homicidios con un rendimiento aceptable. Gradient Boosting emergió como el mejor modelo con F1-Score de 0.709, superando a redes neuronales y otros algoritmos tradicionales. El análisis de importancia de características confirmó la relevancia del mecanismo causal y el presunto agresor como variables discriminativas principales.
+Finalmente, la implementación de modelos de clasificación supervisada demostró la viabilidad de predecir circunstancias de homicidios con un rendimiento aceptable. Gradient Boosting emergió como el mejor modelo, superando a redes neuronales y otros algoritmos tradicionales. El análisis de importancia de características confirmó la relevancia del mecanismo causal y el presunto agresor como variables discriminativas principales.
 
 En conjunto, estos análisis proporcionan una base metodológica robusta para futuras investigaciones criminológicas y para el diseño de políticas públicas de prevención más focalizadas. Los perfiles de riesgo identificados, los patrones de asociación descubiertos, y las capacidades predictivas desarrolladas ofrecen herramientas concretas para la toma de decisiones basada en evidencia, adaptadas a los distintos contextos territoriales y modalidades de violencia en Colombia.
 
